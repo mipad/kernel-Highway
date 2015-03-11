@@ -38,8 +38,6 @@ struct uid_entry {
 	cputime_t stime;
 	cputime_t active_utime;
 	cputime_t active_stime;
-	unsigned long long active_power;
-	unsigned long long power;
 	struct hlist_node hash;
 };
 
@@ -75,7 +73,8 @@ static struct uid_entry *find_or_register_uid(uid_t uid)
 static int uid_stat_show(struct seq_file *m, void *v)
 {
 	struct uid_entry *uid_entry;
-	struct task_struct *task, *temp;
+	struct task_struct *task;
+
 	cputime_t utime;
 	cputime_t stime;
 	unsigned long bkt;
@@ -85,31 +84,23 @@ static int uid_stat_show(struct seq_file *m, void *v)
 	hash_for_each(hash_table, bkt, uid_entry, hash) {
 		uid_entry->active_stime = 0;
 		uid_entry->active_utime = 0;
-		uid_entry->active_power = 0;
 	}
 
 	read_lock(&tasklist_lock);
-	do_each_thread(temp, task) {
-		uid_entry = find_or_register_uid(from_kuid_munged(
-			current_user_ns(), task_uid(task)));
+	for_each_process(task) {
+		
 		if (!uid_entry) {
 			read_unlock(&tasklist_lock);
 			mutex_unlock(&uid_lock);
 			pr_err("%s: failed to find the uid_entry for uid %d\n",
-				__func__, from_kuid_munged(current_user_ns(),
-				task_uid(task)));
+						__func__, task_uid(task));
 			return -ENOMEM;
 		}
-		/* if this task is exiting, we have already accounted for the
-		 * time and power.
-		 */
-		if (task->cpu_power == ULLONG_MAX)
-			continue;
 		task_cputime_adjusted(task, &utime, &stime);
 		uid_entry->active_utime += utime;
 		uid_entry->active_stime += stime;
-		uid_entry->active_power += task->cpu_power;
-	} while_each_thread(temp, task);
+	}
+
 	read_unlock(&tasklist_lock);
 
 	hash_for_each(hash_table, bkt, uid_entry, hash) {
@@ -117,14 +108,9 @@ static int uid_stat_show(struct seq_file *m, void *v)
 							uid_entry->active_utime;
 		cputime_t total_stime = uid_entry->stime +
 							uid_entry->active_stime;
-		unsigned long long total_power = uid_entry->power +
-							uid_entry->active_power;
-		seq_printf(m, "%d: %llu %llu %llu\n", uid_entry->uid,
-			(unsigned long long)jiffies_to_msecs(
-				cputime_to_jiffies(total_utime)) * USEC_PER_MSEC,
-			(unsigned long long)jiffies_to_msecs(
-				cputime_to_jiffies(total_stime)) * USEC_PER_MSEC,
-			total_power);
+		seq_printf(m, "%d: %u %u\n", uid_entry->uid,
+						cputime_to_usecs(total_utime),
+						cputime_to_usecs(total_stime));
 	}
 
 	mutex_unlock(&uid_lock);
@@ -174,15 +160,15 @@ static ssize_t uid_remove_write(struct file *file,
 		kstrtol(end_uid, 10, &uid_end) != 0) {
 		return -EINVAL;
 	}
+
 	mutex_lock(&uid_lock);
 
 	for (; uid_start <= uid_end; uid_start++) {
 		hash_for_each_possible_safe(hash_table, uid_entry, tmp,
-							hash, (uid_t)uid_start) {
-			if (uid_start == uid_entry->uid) {
-				hash_del(&uid_entry->hash);
-				kfree(uid_entry);
-			}
+
+							hash, uid_start) {
+			hash_del(&uid_entry->hash);
+			kfree(uid_entry);
 		}
 	}
 
@@ -208,7 +194,8 @@ static int process_notifier(struct notifier_block *self,
 		return NOTIFY_OK;
 
 	mutex_lock(&uid_lock);
-	uid = from_kuid_munged(current_user_ns(), task_uid(task));
+	uid = task_uid(task);
+
 	uid_entry = find_or_register_uid(uid);
 	if (!uid_entry) {
 		pr_err("%s: failed to find uid %d\n", __func__, uid);
@@ -218,8 +205,7 @@ static int process_notifier(struct notifier_block *self,
 	task_cputime_adjusted(task, &utime, &stime);
 	uid_entry->utime += utime;
 	uid_entry->stime += stime;
-	uid_entry->power += task->cpu_power;
-	task->cpu_power = ULLONG_MAX;
+
 
 exit:
 	mutex_unlock(&uid_lock);
@@ -243,7 +229,7 @@ static int __init proc_uid_cputime_init(void)
 	proc_create_data("remove_uid_range", S_IWUGO, parent, &uid_remove_fops,
 					NULL);
 
-	proc_create_data("show_uid_stat", S_IRUGO, parent, &uid_stat_fops,
+	proc_create_data("show_uid_stat", S_IWUGO, parent, &uid_stat_fops,
 					NULL);
 
 	profile_event_register(PROFILE_TASK_EXIT, &process_notifier_block);
