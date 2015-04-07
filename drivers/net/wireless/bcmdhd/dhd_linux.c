@@ -1119,6 +1119,8 @@ _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 	int ret;
 
 			ASSERT(dhd && dhd->iflist[ifidx]);
+			if (dhd == NULL || dhd->iflist[ifidx] == NULL)
+				return;
 			dev = dhd->iflist[ifidx]->net;
 			if (!dev)
 				return;
