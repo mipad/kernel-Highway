@@ -77,4 +77,8 @@
 		device_type = "memory";
 		reg = <0x80000000 0x80000000>;
 	};
+
+	otg@7d000000 {
+		nvidia,turn-off-vbus-in-lp0;
+	};
 };
