@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 build_number=74
+=======
+build_number=87
+>>>>>>> 08ccf32923e9... video: tegra: hdmi: choose clk rate above 100MHz
