@@ -735,6 +735,17 @@ void write_checkpoint(struct f2fs_sb_info *sbi, bool is_umount)
 	f2fs_submit_bio(sbi, NODE, true);
 	f2fs_submit_bio(sbi, META, true);
 
+	/* this is the case of multiple fstrims without any changes */
+	if (cpc->reason == CP_DISCARD && !is_sbi_flag_set(sbi, SBI_IS_DIRTY)) {
+		f2fs_bug_on(sbi, NM_I(sbi)->dirty_nat_cnt);
+		f2fs_bug_on(sbi, SIT_I(sbi)->dirty_sentries);
+		f2fs_bug_on(sbi, prefree_segments(sbi));
+		flush_sit_entries(sbi, cpc);
+		clear_prefree_segments(sbi, cpc);
+		unblock_operations(sbi);
+		goto out;
+	}
+
 	/*
 	 * update checkpoint pack index
 	 * Increase the version number so that
