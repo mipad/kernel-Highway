@@ -117,7 +117,108 @@ void locate_dirty_segment(struct f2fs_sb_info *sbi, unsigned int segno)
 	}
 
 	mutex_unlock(&dirty_i->seglist_lock);
+<<<<<<< HEAD
 	return;
+=======
+}
+
+static int f2fs_issue_discard(struct f2fs_sb_info *sbi,
+				block_t blkstart, block_t blklen)
+{
+	sector_t start = SECTOR_FROM_BLOCK(blkstart);
+	sector_t len = SECTOR_FROM_BLOCK(blklen);
+	struct seg_entry *se;
+	unsigned int offset;
+	block_t i;
+
+	for (i = blkstart; i < blkstart + blklen; i++) {
+		se = get_seg_entry(sbi, GET_SEGNO(sbi, i));
+		offset = GET_BLKOFF_FROM_SEG0(sbi, i);
+
+		if (!f2fs_test_and_set_bit(offset, se->discard_map))
+			sbi->discard_blks--;
+	}
+	trace_f2fs_issue_discard(sbi->sb, blkstart, blklen);
+	return blkdev_issue_discard(sbi->sb->s_bdev, start, len, GFP_NOFS, 0);
+}
+
+static void __add_discard_entry(struct f2fs_sb_info *sbi,
+		struct cp_control *cpc, struct seg_entry *se,
+		unsigned int start, unsigned int end)
+{
+	struct list_head *head = &SM_I(sbi)->discard_list;
+	struct discard_entry *new, *last;
+
+	if (!list_empty(head)) {
+		last = list_last_entry(head, struct discard_entry, list);
+		if (START_BLOCK(sbi, cpc->trim_start) + start ==
+						last->blkaddr + last->len) {
+			last->len += end - start;
+			goto done;
+		}
+	}
+
+	new = f2fs_kmem_cache_alloc(discard_entry_slab, GFP_NOFS);
+	INIT_LIST_HEAD(&new->list);
+	new->blkaddr = START_BLOCK(sbi, cpc->trim_start) + start;
+	new->len = end - start;
+	list_add_tail(&new->list, head);
+done:
+	SM_I(sbi)->nr_discards += end - start;
+}
+
+static void add_discard_addrs(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+{
+	int entries = SIT_VBLOCK_MAP_SIZE / sizeof(unsigned long);
+	int max_blocks = sbi->blocks_per_seg;
+	struct seg_entry *se = get_seg_entry(sbi, cpc->trim_start);
+	unsigned long *cur_map = (unsigned long *)se->cur_valid_map;
+	unsigned long *ckpt_map = (unsigned long *)se->ckpt_valid_map;
+	unsigned long *discard_map = (unsigned long *)se->discard_map;
+	unsigned long *dmap = SIT_I(sbi)->tmp_map;
+	unsigned int start = 0, end = -1;
+	bool force = (cpc->reason == CP_DISCARD);
+	int i;
+
+	if (se->valid_blocks == max_blocks || !f2fs_discard_en(sbi))
+		return;
+
+	if (!force) {
+		if (!test_opt(sbi, DISCARD) || !se->valid_blocks ||
+		    SM_I(sbi)->nr_discards >= SM_I(sbi)->max_discards)
+			return;
+	}
+
+	/* SIT_VBLOCK_MAP_SIZE should be multiple of sizeof(unsigned long) */
+	for (i = 0; i < entries; i++)
+		dmap[i] = force ? ~ckpt_map[i] & ~discard_map[i] :
+				(cur_map[i] ^ ckpt_map[i]) & ckpt_map[i];
+
+	while (force || SM_I(sbi)->nr_discards <= SM_I(sbi)->max_discards) {
+		start = __find_rev_next_bit(dmap, max_blocks, end + 1);
+		if (start >= max_blocks)
+			break;
+
+		end = __find_rev_next_zero_bit(dmap, max_blocks, start + 1);
+		if (force && start && end != max_blocks
+					&& (end - start) < cpc->trim_minlen)
+			continue;
+
+		__add_discard_entry(sbi, cpc, se, start, end);
+	}
+}
+
+void release_discard_addrs(struct f2fs_sb_info *sbi)
+{
+	struct list_head *head = &(SM_I(sbi)->discard_list);
+	struct discard_entry *entry, *this;
+
+	/* drop caches */
+	list_for_each_entry_safe(entry, this, head, list) {
+		list_del(&entry->list);
+		kmem_cache_free(discard_entry_slab, entry);
+	}
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 }
 
 /*

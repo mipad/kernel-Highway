@@ -93,7 +93,10 @@ static int recover_inode(struct inode *inode, struct page *node_page)
 
 static int find_fsync_dnodes(struct f2fs_sb_info *sbi, struct list_head *head)
 {
+<<<<<<< HEAD
 	unsigned long long cp_ver = le64_to_cpu(sbi->ckpt->checkpoint_ver);
+=======
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 	struct curseg_info *curseg;
 	struct page *page;
 	block_t blkaddr;
@@ -118,8 +121,13 @@ static int find_fsync_dnodes(struct f2fs_sb_info *sbi, struct list_head *head)
 
 		lock_page(page);
 
+<<<<<<< HEAD
 		if (cp_ver != cpver_of_node(page))
 			goto unlock_out;
+=======
+		if (!is_recoverable_dnode(page))
+			break;
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 
 		if (!is_fsync_dnode(page))
 			goto next;
@@ -313,7 +321,10 @@ static int do_recover_data(struct f2fs_sb_info *sbi, struct inode *inode,
 static int recover_data(struct f2fs_sb_info *sbi,
 				struct list_head *head, int type)
 {
+<<<<<<< HEAD
 	unsigned long long cp_ver = le64_to_cpu(sbi->ckpt->checkpoint_ver);
+=======
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 	struct curseg_info *curseg;
 	struct page *page;
 	int err = 0;
@@ -339,8 +350,15 @@ static int recover_data(struct f2fs_sb_info *sbi,
 
 		lock_page(page);
 
+<<<<<<< HEAD
 		if (cp_ver != cpver_of_node(page))
 			goto unlock_out;
+=======
+		if (!is_recoverable_dnode(page)) {
+			f2fs_put_page(page, 1);
+			break;
+		}
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 
 		entry = get_fsync_inode(head, ino_of_node(page));
 		if (!entry)
@@ -395,7 +413,34 @@ int recover_fsync_data(struct f2fs_sb_info *sbi)
 	sbi->por_doing = 0;
 	BUG_ON(!list_empty(&inode_list));
 out:
+<<<<<<< HEAD
 	destroy_fsync_dnodes(sbi, &inode_list);
+=======
+	destroy_fsync_dnodes(&inode_list);
+
+	/* truncate meta pages to be used by the recovery */
+	truncate_inode_pages_range(META_MAPPING(sbi),
+			(loff_t)MAIN_BLKADDR(sbi) << PAGE_SHIFT, -1);
+
+	if (err) {
+		truncate_inode_pages(NODE_MAPPING(sbi), 0);
+		truncate_inode_pages(META_MAPPING(sbi), 0);
+	}
+
+	clear_sbi_flag(sbi, SBI_POR_DOING);
+	if (err)
+		set_ckpt_flags(sbi->ckpt, CP_ERROR_FLAG);
+	mutex_unlock(&sbi->cp_mutex);
+
+	if (!err && need_writecp) {
+		struct cp_control cpc = {
+			.reason = CP_RECOVERY,
+		};
+		err = write_checkpoint(sbi, &cpc);
+	}
+
+	destroy_fsync_dnodes(&dir_list);
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 	kmem_cache_destroy(fsync_entry_slab);
 	write_checkpoint(sbi, false);
 	return err;

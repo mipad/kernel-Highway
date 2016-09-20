@@ -591,13 +591,26 @@ static void unblock_operations(struct f2fs_sb_info *sbi)
 static void do_checkpoint(struct f2fs_sb_info *sbi, bool is_umount)
 {
 	struct f2fs_checkpoint *ckpt = F2FS_CKPT(sbi);
+<<<<<<< HEAD
 	nid_t last_nid = 0;
+=======
+	struct f2fs_nm_info *nm_i = NM_I(sbi);
+	unsigned long orphan_num = sbi->im[ORPHAN_INO].ino_num;
+	nid_t last_nid = nm_i->next_scan_nid;
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 	block_t start_blk;
 	struct page *cp_page;
 	unsigned int data_sum_blocks, orphan_blocks;
 	unsigned int crc32 = 0;
 	void *kaddr;
 	int i;
+<<<<<<< HEAD
+=======
+	int cp_payload_blks = __cp_payload(sbi);
+	struct super_block *sb = sbi->sb;
+	struct curseg_info *seg_i = CURSEG_I(sbi, CURSEG_HOT_NODE);
+	u64 kbytes_written;
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 
 	/* Flush all the NAT/SIT pages */
 	while (get_pages(sbi, F2FS_DIRTY_META))
@@ -659,6 +672,15 @@ static void do_checkpoint(struct f2fs_sb_info *sbi, bool is_umount)
 	else
 		clear_ckpt_flags(ckpt, CP_ORPHAN_PRESENT_FLAG);
 
+<<<<<<< HEAD
+=======
+	if (is_sbi_flag_set(sbi, SBI_NEED_FSCK))
+		set_ckpt_flags(ckpt, CP_FSCK_FLAG);
+
+	/* set this flag to activate crc|cp_ver for recovery */
+	set_ckpt_flags(ckpt, CP_CRC_RECOVERY_FLAG);
+
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 	/* update SIT/NAT bitmap */
 	get_sit_bitmap(sbi, __bitmap_ptr(sbi, SIT_BITMAP));
 	get_nat_bitmap(sbi, __bitmap_ptr(sbi, NAT_BITMAP));
@@ -710,10 +732,36 @@ static void do_checkpoint(struct f2fs_sb_info *sbi, bool is_umount)
 	/* Here, we only have one bio having CP pack */
 	sync_meta_pages(sbi, META_FLUSH, LONG_MAX);
 
+<<<<<<< HEAD
 	if (!is_set_ckpt_flags(ckpt, CP_ERROR_FLAG)) {
 		clear_prefree_segments(sbi);
 		F2FS_RESET_SB_DIRT(sbi);
 	}
+=======
+	/* wait for previous submitted meta pages writeback */
+	wait_on_all_pages_writeback(sbi);
+
+	release_ino_entry(sbi, false);
+
+	if (unlikely(f2fs_cp_error(sbi)))
+		return -EIO;
+
+	clear_prefree_segments(sbi, cpc);
+	clear_sbi_flag(sbi, SBI_IS_DIRTY);
+	clear_sbi_flag(sbi, SBI_NEED_CP);
+
+	/*
+	 * redirty superblock if metadata like node page or inode cache is
+	 * updated during writing checkpoint.
+	 */
+	if (get_pages(sbi, F2FS_DIRTY_NODES) ||
+			get_pages(sbi, F2FS_DIRTY_IMETA))
+		set_sbi_flag(sbi, SBI_IS_DIRTY);
+
+	f2fs_bug_on(sbi, get_pages(sbi, F2FS_DIRTY_DENTS));
+
+	return 0;
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 }
 
 /*

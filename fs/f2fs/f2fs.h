@@ -975,9 +975,17 @@ void destroy_node_manager_caches(void);
  */
 void f2fs_balance_fs(struct f2fs_sb_info *);
 void invalidate_blocks(struct f2fs_sb_info *, block_t);
+<<<<<<< HEAD
 void locate_dirty_segment(struct f2fs_sb_info *, unsigned int);
 void clear_prefree_segments(struct f2fs_sb_info *);
 int npages_for_summary_flush(struct f2fs_sb_info *);
+=======
+bool is_checkpointed_data(struct f2fs_sb_info *, block_t);
+void refresh_sit_entry(struct f2fs_sb_info *, block_t, block_t);
+void clear_prefree_segments(struct f2fs_sb_info *, struct cp_control *);
+void release_discard_addrs(struct f2fs_sb_info *);
+int npages_for_summary_flush(struct f2fs_sb_info *, bool);
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 void allocate_new_segments(struct f2fs_sb_info *);
 struct page *get_sum_page(struct f2fs_sb_info *, unsigned int);
 struct bio *f2fs_bio_alloc(struct block_device *, int);

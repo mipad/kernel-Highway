@@ -683,16 +683,53 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
 
 	/* recover fsynced data */
 	if (!test_opt(sbi, DISABLE_ROLL_FORWARD)) {
+<<<<<<< HEAD
 		err = recover_fsync_data(sbi);
 		if (err)
+=======
+		/*
+		 * mount should be failed, when device has readonly mode, and
+		 * previous checkpoint was not done by clean system shutdown.
+		 */
+		if (bdev_read_only(sb->s_bdev) &&
+				!is_set_ckpt_flags(sbi->ckpt, CP_UMOUNT_FLAG)) {
+			err = -EROFS;
+			goto free_kobj;
+		}
+
+		if (need_fsck)
+			set_sbi_flag(sbi, SBI_NEED_FSCK);
+
+		if (!retry)
+			goto skip_recovery;
+
+		err = recover_fsync_data(sbi, false);
+		if (err < 0) {
+			need_fsck = true;
+			f2fs_msg(sb, KERN_ERR,
+				"Cannot recover all fsync data errno=%d", err);
+			goto free_kobj;
+		}
+	} else {
+		err = recover_fsync_data(sbi, true);
+
+		if (!f2fs_readonly(sb) && err > 0) {
+			err = -EINVAL;
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 			f2fs_msg(sb, KERN_ERR,
 				"Cannot recover all fsync data errno=%ld", err);
 	}
+<<<<<<< HEAD
 
 	/* After POR, we can run background GC thread */
 	err = start_gc_thread(sbi);
 	if (err)
 		goto fail;
+=======
+skip_recovery:
+	/* recover_fsync_data() cleared this already */
+	clear_sbi_flag(sbi, SBI_POR_DOING);
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 
 	err = f2fs_build_stats(sbi);
 	if (err)

@@ -80,6 +80,12 @@ struct f2fs_super_block {
 /*
  * For checkpoint
  */
+<<<<<<< HEAD
+=======
+#define CP_CRC_RECOVERY_FLAG	0x00000040
+#define CP_FASTBOOT_FLAG	0x00000020
+#define CP_FSCK_FLAG		0x00000010
+>>>>>>> 18e83a29169... f2fs: use crc and cp version to determine roll-forward recovery
 #define CP_ERROR_FLAG		0x00000008
 #define CP_COMPACT_SUM_FLAG	0x00000004
 #define CP_ORPHAN_PRESENT_FLAG	0x00000002
