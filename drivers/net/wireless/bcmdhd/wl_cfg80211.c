@@ -881,7 +881,7 @@ wl_ch_host_to_driver(u16 channel)
 		chanspec |= WL_CHANSPEC_BAND_5G;
 
 	chanspec |= WL_CHANSPEC_BW_20;
-	chanspec |= WL_CHANSPEC_CTL_SB_NONE;
+	chanspec |= 0x0000;
 
 	return wl_chspec_host_to_driver(chanspec);
 }
@@ -1834,7 +1834,7 @@ static void wl_scan_prep(struct wl_scan_params *params, struct cfg80211_scan_req
 			}
 
 			chanspec |= WL_CHANSPEC_BW_20;
-			chanspec |= WL_CHANSPEC_CTL_SB_NONE;
+			chanspec |= 0x0000;
 
 			params->channel_list[j] = channel;
 			params->channel_list[j] &= WL_CHANSPEC_CHAN_MASK;
@@ -3402,7 +3402,7 @@ wl_cfg80211_connect(struct wiphy *wiphy, struct net_device *dev,
 		band = (channel <= CH_MAX_2G_CHANNEL) ? WL_CHANSPEC_BAND_2G
 			: WL_CHANSPEC_BAND_5G;
 		bw = WL_CHANSPEC_BW_20;
-		ctl_sb = WL_CHANSPEC_CTL_SB_NONE;
+		ctl_sb = 0x0000;
 		chspec = (channel | band | bw | ctl_sb);
 		ext_join_params->assoc.chanspec_list[0]  &= WL_CHANSPEC_CHAN_MASK;
 		ext_join_params->assoc.chanspec_list[0] |= chspec;
@@ -7599,7 +7599,7 @@ static void wl_ch_to_chanspec(int ch, struct wl_join_params *join_params,
 			chanspec |= WL_CHANSPEC_BAND_5G;
 
 		chanspec |= WL_CHANSPEC_BW_20;
-		chanspec |= WL_CHANSPEC_CTL_SB_NONE;
+		chanspec |= 0x0000;
 
 		*join_params_size += WL_ASSOC_PARAMS_FIXED_SIZE +
 			join_params->params.chanspec_num * sizeof(chanspec_t);
@@ -10859,7 +10859,7 @@ wl_cfg80211_get_chanspecs_2g(struct net_device *ndev, void *buf, s32 buflen)
 
 	/* Restrict channels to 2.4GHz, 20MHz BW, no SB. */
 	chanspec |= (WL_CHANSPEC_BAND_2G | WL_CHANSPEC_BW_20 |
-		WL_CHANSPEC_CTL_SB_NONE);
+		0x0000);
 	chanspec = wl_chspec_host_to_driver(chanspec);
 
 	ret = wldev_iovar_getbuf_bsscfg(ndev, "chanspecs", (void *)&chanspec,
@@ -10890,7 +10890,7 @@ wl_cfg80211_get_chanspecs_5g(struct net_device *ndev, void *buf, s32 buflen)
 
 	/* Restrict channels to 5GHz, 20MHz BW, no SB. */
 	chanspec |= (WL_CHANSPEC_BAND_5G | WL_CHANSPEC_BW_20 |
-		WL_CHANSPEC_CTL_SB_NONE);
+		0x0000);
 	chanspec = wl_chspec_host_to_driver(chanspec);
 
 	ret = wldev_iovar_getbuf_bsscfg(ndev, "chanspecs", (void *)&chanspec,
