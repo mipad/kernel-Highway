@@ -1357,16 +1357,6 @@ static void __init tegra_ardbeg_early_init(void)
 		tegra_soc_device_init("ardbeg");
 }
 
-static struct tegra_dtv_platform_data ardbeg_dtv_pdata = {
-	.dma_req_selector = 11,
-};
-
-static void __init ardbeg_dtv_init(void)
-{
-	tegra_dtv_device.dev.platform_data = &ardbeg_dtv_pdata;
-	platform_device_register(&tegra_dtv_device);
-}
-
 static struct tegra_io_dpd pexbias_io = {
 	.name			= "PEX_BIAS",
 	.io_dpd_reg_index	= 0,
