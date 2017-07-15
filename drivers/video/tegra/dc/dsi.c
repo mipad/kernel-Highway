@@ -4037,20 +4037,21 @@ static void tegra_dc_dsi_postpoweron(struct tegra_dc *dc)
 	if (dsi->enabled) {
 		if (dsi->info.lp00_pre_panel_wakeup)
 			tegra_dsi_pad_enable(dsi);
-
+		
 		if ((p_gamma_cmds != NULL) && (n_gamma_cmds != 0)) {
-			err = tegra_dsi_send_panel_cmd(dc, dsi, p_gamma_cmds, n_gamma_cmds);
-			if (err < 0) {
-				dev_err(&dc->ndev->dev, "dsi: error sending gamma cmd when dsi is enabled\n");
-				goto fail;
-			}
-			pr_info("panel: sending gamma cmd in %s() \n", __func__);
+				err = tegra_dsi_send_panel_cmd(dc, dsi, p_gamma_cmds, n_gamma_cmds);
+				if (err < 0) {
+					dev_err(&dc->ndev->dev, "dsi: error sending gamma cmd when dsi is enabled\n");
+					goto fail;
+				}
+				pr_info("panel: sending gamma cmd in %s() \n", __func__);
 		}
-
+	
 		if ((p_bist_cmd != NULL) && (n_bist_cmd != 0)) {
 			dsi->info.dsi_init_cmd = p_bist_cmd;
 			dsi->info.n_init_cmd = n_bist_cmd;
 		}
+
 		err = tegra_dsi_send_panel_cmd(dc, dsi, dsi->info.dsi_init_cmd,
 							dsi->info.n_init_cmd);
 		if (err < 0) {
