@@ -1,3 +1,22 @@
+/*
+ * arch/arm/boot/dts/tegra124-mocha.dts
+ *
+ * Copyright (c) 2017, Smoke Team.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 /dts-v1/;
 
 #include "tegra124.dtsi"
@@ -59,44 +78,9 @@
 			synaptics,cap-button-map = <139 102 158 116>;
 		};
 
-		atmel_mxt_ts@4a {
-			compatible = "atmel,maxtouch-ts";
-			reg = <0x4a>;
-
-			interrupt-parent = <&gpio>;
-			interrupts = <143 0x2>;
-			vdd-touch-supply = <&ldo3_reg>;
-			atmel,irq-flags = <0x2008>;
-			atmel,reset-gpio = <&gpio 84 0>;
-			atmel,irq-gpio = <&gpio 143 0>;
-			atmel,gpio-mask = <0xc>;
-			atmel,vendor-info = <0x03eb>;
-			atmel,product-info = <0x214f>;
-
-			atmel,config-array-size = <2>;
-
-			atmel,cfg_1 {
-				atmel,family-id = <0xA4>;
-				atmel,variant-id = <0x04>;
-				atmel,version = <0x10>;
-				atmel,build = <0xAA>;
-				atmel,bootldr-id = <0x48>;
-				atmel,mxt-cfg-name = "mxt1664t_config.fw";
-				atmel,vendor-id = <0x4>;
-				atmel,mxt-fw-name = "mxt1664t.fw";
-
-			};
-			atmel,cfg_2 {
-				atmel,family-id = <0xA4>;
-				atmel,variant-id = <0x0B>;
-				atmel,version = <0x12>;
-				atmel,build = <0xAC>;
-				atmel,bootldr-id = <0x51>;
-				atmel,mxt-cfg-name = "mxt1066t_config.fw";
-				atmel,vendor-id = <0x4>;
-				atmel,mxt-fw-name = "mxt1066t.fw";
-			};
-		};
+		
+			
+	
 	};
 
 	i2c@7000c000 {
