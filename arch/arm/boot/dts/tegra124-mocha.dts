@@ -45,7 +45,6 @@ chosen {
 	};
 
 
-
 	i2c@7000c700 {
 		nvidia,clock-always-on;
 		clock-frequency = <400000>;
