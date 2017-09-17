@@ -1355,7 +1355,8 @@ static int ardbeg_nct72_init(void)
 		ARRAY_SIZE(laguna_i2c_nct72_board_info));
 	else
 		i2c_register_board_info(0, ardbeg_i2c_nct72_board_info,
-		ARRAY_SIZE(ardbeg_i2c_nct72_board_info));
+			ARRAY_SIZE(ardbeg_i2c_nct72_board_info));
+
 
 	return ret;
 }
