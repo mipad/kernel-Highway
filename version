@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 build_number=74
 =======
 build_number=87
 >>>>>>> 08ccf32923e9... video: tegra: hdmi: choose clk rate above 100MHz
+=======
+build_number=61
+>>>>>>> 26547f6d3da... mocha: tegra: reboot: mocha: FIXME: disable reboot by PSCI0.2 and by PMC
