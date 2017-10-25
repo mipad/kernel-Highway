@@ -283,12 +283,12 @@ static int tegra_wdt_probe(struct platform_device *pdev)
 	if ((res_wdt->start & 0xff) < 0x50)
 		tegra_wdt->tmrsrc = 1 + (res_wdt->start & 0xf) / 8;
 	else
-		tegra_wdt->tmrsrc = ((int) (3 + ((res_wdt->start & 0xff) - 0x50) / 8)) % 10;
-	if (!tegra_wdt->wdt_source || !tegra_wdt->wdt_timer) {
-		dev_err(&pdev->dev, "unable to map registers\n");
-		ret = -ENOMEM;
-		goto fail;
-	}
+		tegra_wdt->config = ((int) (3 + ((res_wdt->start & 0xff) -
+							0x50) / 8)) % 10;
+	/* Enable interrupts and reset events by default */
+	tegra_wdt->config |= WDT_CFG_PERIOD |
+				WDT_CFG_FIQ_EN | WDT_CFG_PMC2CAR_RST_EN;
+
 
 	tegra_wdt_disable(&tegra_wdt->wdt);
 	writel(TIMER_PCR_INTR, tegra_wdt->wdt_timer + TIMER_PCR);
