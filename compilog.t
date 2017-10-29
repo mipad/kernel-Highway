@@ -30,8 +30,8 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   CC      kernel/trace/trace.o
   LD      drivers/base/built-in.o
   CC      kernel/module.o
-  LD      kernel/trace/built-in.o
   GZIP    kernel/config_data.gz
+  LD      kernel/trace/built-in.o
   CHK     kernel/config_data.h
   LD      kernel/built-in.o
   LD      drivers/built-in.o
@@ -64,8 +64,8 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   HOSTLD  scripts/mod/modpost
   DTC     arch/arm/boot/dts/tegra124-mocha.dtb
 [1;32m
-Ядро скомпилировано за 00:25
-[0m[1;32mСборка номер 65 в ветке 
+Ядро скомпилировано за 00:24
+[0m[1;32mСборка номер 67 в ветке 
 [0m[1;32m
 Создание zip архива
 
@@ -91,7 +91,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   adding: tools/mkbootimg (deflated 34%)
   adding: zImage_legacy (deflated 0%)
 [1;32m
-v3.10.96(24.10.2019-22.56).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+v3.10.96(24.10.2019-23.01).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 [1;32m
 Завершено
 [0m
