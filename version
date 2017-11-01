@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 build_number=74
 =======
 build_number=87
@@ -11,3 +12,6 @@ build_number=61
 =======
 build_number=64
 >>>>>>> 20248b85b8c... mocha: arch: arm: configs: mocha: disable zram
+=======
+build_number=69
+>>>>>>> 2b6696a3c0f... mocha: drivers: platform: tegra: add serial number parsing

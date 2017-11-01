@@ -24,10 +24,13 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   HOSTLD  scripts/mod/modpost
   CHK     include/generated/compile.h
   CC      init/version.o
-  CC      kernel/sys.o
   LD      init/built-in.o
+<<<<<<< HEAD
   CC      arch/arm/mach-tegra/board-ardbeg-sdhci.o
   CC      arch/arm/mach-tegra/board-loki-sdhci.o
+=======
+  CC      kernel/sys.o
+>>>>>>> 2b6696a3c0f... mocha: drivers: platform: tegra: add serial number parsing
   CC      drivers/base/firmware_class.o
   LD      arch/arm/mach-tegra/built-in.o
   CC      kernel/trace/trace.o
@@ -100,8 +103,13 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   HOSTLD  scripts/mod/modpost
 make[1]: 'arch/arm/boot/dts/tegra124-mocha.dtb' está actualizado.
 [1;32m
+<<<<<<< HEAD
 Ядро скомпилировано за 00:28
 [0m[1;32mСборка номер 64 в ветке 
+=======
+Ядро скомпилировано за 00:22
+[0m[1;32mСборка номер 69 в ветке 
+>>>>>>> 2b6696a3c0f... mocha: drivers: platform: tegra: add serial number parsing
 [0m[1;32m
 Создание zip архива
 
@@ -127,7 +135,11 @@ make[1]: 'arch/arm/boot/dts/tegra124-mocha.dtb' está actualizado.
   adding: tools/mkbootimg (deflated 34%)
   adding: zImage_legacy (deflated 0%)
 [1;32m
+<<<<<<< HEAD
 v3.10.96(24.10.2019-22.53).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+=======
+v3.10.96(24.10.2019-23.19).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+>>>>>>> 2b6696a3c0f... mocha: drivers: platform: tegra: add serial number parsing
 [1;32m
 Завершено
 [0m
