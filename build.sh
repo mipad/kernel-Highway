@@ -85,6 +85,7 @@ function make_zip()
 		fi
 	fi
 
+<<<<<<< HEAD
 	cd $KERNEL_DIR/anykernel
 	local zip_name="$kernel_name($(date +'%d.%m.%Y-%H.%M')).zip"
 	zip -r $zip_name *
@@ -104,6 +105,20 @@ function make_zip()
 	else
 		printfc "\nНе удалось создать архив\n" $ERROR
 		return
+=======
+MAKE_DTB()
+{
+	echo "Creating dtb for $LOCALVERSION..."
+	
+	make -C "$RDIR" O=build "${DTBNAME}" \
+		|| ABORT "Failed to make ${DTBNAME} .."
+		
+		
+         if [ -d $DTB ] ; then
+                 echo "You have already ${DTB} folder.."
+          else 
+	         mkdir -p $DTB 
+>>>>>>> a4c680764d6... 【 ॐ 】【 Added 】 --->>> small tweaks..
 	fi
 	cd $KERNEL_DIR
 }
@@ -118,9 +133,20 @@ function compile()
 		make mrproper
 	fi
 
+<<<<<<< HEAD
 	generate_version
 	make $config
 	make -j$threads ARCH=$ARCH CROSS_COMPILE=$toolchain zImage
+=======
+ cd $TV
+ 
+ . build.sh
+ 
+ if [ -f $TV/sign/$ZS ]; then
+    rm -r $RDIR/*.zip
+    chmod 777 $TV/sign/$ZS
+    cp -R $TV/sign/$ZS $RDIR/${FLEVOR}_${LOCALVERSION}-signed.zip
+>>>>>>> a4c680764d6... 【 ॐ 】【 Added 】 --->>> small tweaks..
 
 	printfc "\nКомпиляция дерева устройства\n\n" $HEAD
 
