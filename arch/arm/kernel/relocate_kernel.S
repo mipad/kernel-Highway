@@ -3,6 +3,14 @@
  */
 #include <linux/linkage.h>
 #include <asm/kexec.h>
+<<<<<<< HEAD
+=======
+
+#ifdef CONFIG_KEXEC_HARDBOOT
+#include <../mach-tegra/iomap.h>
+#endif 
+
+>>>>>>> 0b632be3621... 【 ॐ 】【 Added 】 --->>> kexec-hardboot patch + zram
 	.align	3	/* not needed for this code, but keeps fncpy() happy */
 ENTRY(relocate_new_kernel)
 	ldr	r0,kexec_indirection_page
@@ -44,6 +52,12 @@ ENTRY(relocate_new_kernel)
 	bne 9b
 	b 0b
 2:
+#ifdef CONFIG_KEXEC_HARDBOOT
+	ldr	r0, kexec_hardboot
+	teq	r0, #0
+	bne	hardboot
+#endif
+
 	/* Jump to relocated kernel */
 	mov lr,r1
 	mov r0,#0
@@ -51,6 +65,35 @@ ENTRY(relocate_new_kernel)
 	ldr r2,kexec_boot_atags
  ARM(	mov pc, lr	)
  THUMB(	bx lr		)
+
+
+#ifdef CONFIG_KEXEC_HARDBOOT
+hardboot:
+	/* Stash boot arguments in hardboot page: `kexec_hardboot'
+/home/dargon10/kernel/arch/arm/kernel/machine_kexec.c:164: undefined reference to `kexec_hardboot'
+
+	 *  0: KEXEC_HB_PAGE_MAGIC
+	 *  4: kexec_start_address
+	 *  8: kexec_mach_type
+	 * 12: kexec_boot_atags */
+	ldr	r0, =KEXEC_HB_PAGE_ADDR
+	str	r1, [r0, #4]
+	ldr	r1, kexec_mach_type
+	str	r1, [r0, #8]
+	ldr	r1, kexec_boot_atags
+	str	r1, [r0, #12]
+	ldr	r1, =KEXEC_HB_PAGE_MAGIC
+	str	r1, [r0]
+
+	ldr     r0, =TEGRA_PMC_BASE
+	ldr	r1, [r0]
+	orr	r1, r1, #0x10
+	str	r1, [r0]
+loop:	b	loop
+
+	.ltorg
+#endif
+
 	.align
 	.globl kexec_start_address
 kexec_start_address:
@@ -65,6 +108,15 @@ kexec_mach_type:
 	.globl kexec_boot_atags
 kexec_boot_atags:
 	.long	0x0
+
+	
+#ifdef CONFIG_KEXEC_HARDBOOT
+	.globl kexec_hardboot
+kexec_hardboot:
+	.long	0x0
+#endif
+
+
 ENDPROC(relocate_new_kernel)
 relocate_new_kernel_end:
 	.globl relocate_new_kernel_size
