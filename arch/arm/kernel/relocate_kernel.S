@@ -5,6 +5,10 @@
 #include <linux/linkage.h>
 #include <asm/kexec.h>
 
+#ifdef CONFIG_KEXEC_HARDBOOT
+#include <../mach-tegra/iomap.h>
+#endif 
+
 	.align	3	/* not needed for this code, but keeps fncpy() happy */
 
 ENTRY(relocate_new_kernel)
