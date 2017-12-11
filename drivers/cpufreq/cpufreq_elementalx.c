@@ -95,6 +95,28 @@ static void ex_check_cpu(int cpu, unsigned int load)
 	}
 	avg_load = (ex_data.prev_load + load) >> 1;
 
+	if (ex_tuners->gboost) {
+		ewma_add(&ex_data.gpu_avg, gpu_load);
+		ex_data.g_count = ewma_read(&ex_data.gpu_avg);
+	}
+
+	//gboost mode
+	if (ex_tuners->gboost && ex_data.g_count > 500) {
+				
+		if (avg_load > 90) {
+			freq_next = policy->max;
+		} else {
+			freq_next = policy->max * avg_load / 100;
+			freq_next = MAX(freq_next, ex_tuners->gboost_min_freq);
+		}
+
+		target_freq = ex_freq_increase(policy, freq_next, cpu);
+
+		__cpufreq_driver_target(policy, target_freq, CPUFREQ_RELATION_H);
+
+		goto finished;
+	} 
+
 	//normal mode
 	if (max_load_freq > up_threshold_level[1] * cur_freq) {
 
@@ -145,7 +167,7 @@ static void ex_check_cpu(int cpu, unsigned int load)
 			freq_next = MAX(freq_next, policy->min);
 
 		__cpufreq_driver_target(policy, freq_next,
-			CPUFREQ_RELATION_C);
+			CPUFREQ_RELATION_L);
 	}
 
 finished:
