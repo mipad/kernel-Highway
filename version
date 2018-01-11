@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 build_number=5
 =======
 build_number=76
 >>>>>>> d04f770418d... mocha:configs: mocha: a little rebrand
+=======
+build_number=78
+>>>>>>> 5040c4fbb54... mocha: configs: mocha: custom changes in alphabetical order and enable additional params for bcm4354
