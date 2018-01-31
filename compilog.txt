@@ -798,13 +798,11 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   LD      drivers/video/built-in.o
 =======
   CC      init/version.o
-  CC      arch/arm/kernel/bootinfo.o
   LD      init/built-in.o
   CC      kernel/sys.o
-  CC      arch/arm/mach-tegra/board-ardbeg.o
-  LD      arch/arm/kernel/built-in.o
-  CC      arch/arm/mach-tegra/board-ardbeg-power.o
+  CC      fs/f2fs/file.o
   CC      drivers/base/firmware_class.o
+<<<<<<< HEAD
 <<<<<<< HEAD
   CC      fs/aio.o
   CC      kernel/trace/trace.o
@@ -814,22 +812,40 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   CC      kernel/trace/trace.o
   CC      arch/arm/mach-tegra/panel-a-1200-1920-7-0.o
   CC      arch/arm/mach-tegra/panel-a-1200-800-8-0.o
+=======
+  CC      fs/f2fs/checkpoint.o
+  CC      fs/f2fs/gc.o
+  CC      sound/pci/hda/hda_intel.o
+>>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
   LD      drivers/base/built-in.o
-  CC      drivers/clk/clk-palmas.o
-  CC      arch/arm/mach-tegra/board-loki.o
-  LD      drivers/clk/built-in.o
-  CC      arch/arm/mach-tegra/board-loki-kbc.o
-  CC      drivers/extcon/extcon-palmas.o
-  CC      arch/arm/mach-tegra/board-loki-power.o
-  CC      drivers/gpio/gpio-palmas.o
-  LD      drivers/extcon/built-in.o
-  LD      arch/arm/mach-tegra/built-in.o
-  LD      drivers/gpio/built-in.o
+  CC      fs/f2fs/data.o
+  CC      kernel/trace/trace.o
+  CC      fs/f2fs/node.o
+  CC      drivers/input/touchscreen/atmel_mxt_ts.o
+  LD      sound/pci/hda/snd-hda-codec.o
+  LD      sound/pci/hda/snd-hda-codec-realtek.o
+  LD      sound/pci/hda/snd-hda-codec-cmedia.o
+  LD      sound/pci/hda/snd-hda-codec-analog.o
+  LD      sound/pci/hda/snd-hda-codec-idt.o
+  LD      sound/pci/hda/snd-hda-codec-si3054.o
+  LD      sound/pci/hda/snd-hda-codec-cirrus.o
+  LD      sound/pci/hda/snd-hda-codec-ca0110.o
+  LD      sound/pci/hda/snd-hda-codec-ca0132.o
+  LD      sound/pci/hda/snd-hda-codec-conexant.o
+  LD      sound/pci/hda/snd-hda-codec-via.o
+  LD      sound/pci/hda/snd-hda-intel.o
+  LD      sound/pci/hda/built-in.o
+  LD      sound/pci/built-in.o
+  CC      fs/f2fs/segment.o
   LD      kernel/trace/built-in.o
 >>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
   CC      kernel/module.o
-  CC      drivers/mfd/palmas.o
+  LD      sound/built-in.o
+  CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_core.o
+  LD      fs/f2fs/f2fs.o
+  LD      fs/f2fs/built-in.o
   GZIP    kernel/config_data.gz
+<<<<<<< HEAD
 <<<<<<< HEAD
   LD      kernel/trace/built-in.o
   LD      drivers/power/built-in.o
@@ -843,11 +859,22 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   CC      drivers/rtc/rtc-palmas.o
   CC      drivers/regulator/palmas-regulator.o
 >>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
+=======
+  LD      fs/built-in.o
+  LD      drivers/input/touchscreen/synaptics_dsx/built-in.o
+  LD      drivers/input/touchscreen/built-in.o
+  LD      drivers/input/built-in.o
+>>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
   CHK     kernel/config_data.h
+  UPD     kernel/config_data.h
+  CC      kernel/configs.o
   LD      kernel/built-in.o
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 8b337c8f614... mocha:configs: mocha: disable all other chargers and batteries
 =======
+=======
+>>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
 <<<<<<< HEAD
 =======
   LD      drivers/rtc/built-in.o
@@ -860,7 +887,12 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   LD      drivers/staging/iio/built-in.o
   LD      drivers/staging/built-in.o
 >>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
+<<<<<<< HEAD
 >>>>>>> ef70cd0d425... mocha:mocha: Revert drivers: extcon: add wakelock
+=======
+=======
+>>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
+>>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
   LD      drivers/built-in.o
   CC      net/unix/sysctl_net_unix.o
   CC      net/netfilter/x_tables.o
@@ -980,17 +1012,27 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 [1;32m
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Ядро скомпилировано за 02:41
 [0m[1;32mСборка номер 85 в ветке 
 =======
 =======
 >>>>>>> ef70cd0d425... mocha:mocha: Revert drivers: extcon: add wakelock
+=======
+>>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
 Ядро скомпилировано за 00:29
 =======
 Ядро скомпилировано за 00:32
 >>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
 [0m[1;32mСборка номер 87 в ветке 
+<<<<<<< HEAD
 >>>>>>> 8b337c8f614... mocha:configs: mocha: disable all other chargers and batteries
+=======
+=======
+Ядро скомпилировано за 00:31
+[0m[1;32mСборка номер 89 в ветке 
+>>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
+>>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
 [0m[1;32m
 Создание zip архива
 
@@ -1018,16 +1060,25 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 [1;32m
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 v3.10.96(26.10.2019-10.08).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 =======
 v3.10.96(27.10.2019-09.27).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 >>>>>>> 8b337c8f614... mocha:configs: mocha: disable all other chargers and batteries
 =======
+=======
+>>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
 v3.10.96(27.10.2019-09.27).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 =======
 v3.10.96(26.10.2019-23.51).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 >>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
+<<<<<<< HEAD
 >>>>>>> ef70cd0d425... mocha:mocha: Revert drivers: extcon: add wakelock
+=======
+=======
+v3.10.96(26.10.2019-23.56).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+>>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
+>>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
 [1;32m
 Завершено
 [0m

@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 build_number=5
 =======
 build_number=76
@@ -19,3 +20,6 @@ build_number=85
 =======
 build_number=87
 >>>>>>> 8b337c8f614... mocha:configs: mocha: disable all other chargers and batteries
+=======
+build_number=89
+>>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
