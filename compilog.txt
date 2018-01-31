@@ -799,6 +799,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 =======
   CC      init/version.o
   LD      init/built-in.o
+<<<<<<< HEAD
   CC      kernel/sys.o
   CC      fs/f2fs/file.o
   CC      drivers/base/firmware_class.o
@@ -839,12 +840,21 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   CC      fs/f2fs/segment.o
   LD      kernel/trace/built-in.o
 >>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
+=======
+  CC      arch/arm/mach-tegra/devices.o
+  CC      arch/arm/mach-tegra/board-ardbeg-sata.o
+  CC      drivers/base/firmware_class.o
+  LD      arch/arm/mach-tegra/built-in.o
+  LD      drivers/base/built-in.o
+  CC      kernel/trace/trace.o
+>>>>>>> 839079efa76... mocha:configs: mocha: disable ata
   CC      kernel/module.o
   LD      sound/built-in.o
   CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_core.o
   LD      fs/f2fs/f2fs.o
   LD      fs/f2fs/built-in.o
   GZIP    kernel/config_data.gz
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   LD      kernel/trace/built-in.o
@@ -892,6 +902,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 =======
 =======
 >>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
+<<<<<<< HEAD
 >>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
   LD      drivers/built-in.o
   CC      net/unix/sysctl_net_unix.o
@@ -981,6 +992,18 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   LD      net/wireless/cfg80211.o
   LD      net/wireless/built-in.o
   LD      net/built-in.o
+=======
+=======
+  CC      drivers/pci/quirks.o
+  LD      kernel/trace/built-in.o
+  LD      drivers/pci/built-in.o
+  CHK     kernel/config_data.h
+  UPD     kernel/config_data.h
+  CC      kernel/configs.o
+>>>>>>> 839079efa76... mocha:configs: mocha: disable ata
+  LD      drivers/built-in.o
+  LD      kernel/built-in.o
+>>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
   LINK    vmlinux
   LD      vmlinux.o
   MODPOST vmlinux.o
@@ -1013,6 +1036,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Ядро скомпилировано за 02:41
 [0m[1;32mСборка номер 85 в ветке 
 =======
@@ -1020,6 +1044,8 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 >>>>>>> ef70cd0d425... mocha:mocha: Revert drivers: extcon: add wakelock
 =======
 >>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
+=======
+>>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
 Ядро скомпилировано за 00:29
 =======
 Ядро скомпилировано за 00:32
@@ -1032,7 +1058,14 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 Ядро скомпилировано за 00:31
 [0m[1;32mСборка номер 89 в ветке 
 >>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
+<<<<<<< HEAD
 >>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
+=======
+=======
+Ядро скомпилировано за 00:23
+[0m[1;32mСборка номер 91 в ветке 
+>>>>>>> 839079efa76... mocha:configs: mocha: disable ata
+>>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
 [0m[1;32m
 Создание zip архива
 
@@ -1061,6 +1094,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 v3.10.96(26.10.2019-10.08).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 =======
 v3.10.96(27.10.2019-09.27).zip создан, перемещение в /home/dargons10/mkernel/output[0m
@@ -1068,6 +1102,8 @@ v3.10.96(27.10.2019-09.27).zip создан, перемещение в /home/dar
 =======
 =======
 >>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
+=======
+>>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
 v3.10.96(27.10.2019-09.27).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 =======
 v3.10.96(26.10.2019-23.51).zip создан, перемещение в /home/dargons10/mkernel/output[0m
@@ -1078,7 +1114,13 @@ v3.10.96(26.10.2019-23.51).zip создан, перемещение в /home/dar
 =======
 v3.10.96(26.10.2019-23.56).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 >>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
+<<<<<<< HEAD
 >>>>>>> 19c9ea7d7d1... mocha: mocha: configs: mocha: disable cec and hdmi
+=======
+=======
+v3.10.96(27.10.2019-00.01).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+>>>>>>> 839079efa76... mocha:configs: mocha: disable ata
+>>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
 [1;32m
 Завершено
 [0m
