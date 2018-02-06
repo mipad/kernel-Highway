@@ -25,110 +25,15 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   CHK     include/generated/compile.h
   CC      init/version.o
   LD      init/built-in.o
-<<<<<<< HEAD
   CC      kernel/sys.o
-  CC      fs/f2fs/file.o
   CC      drivers/base/firmware_class.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-  CC      fs/aio.o
   CC      kernel/trace/trace.o
   LD      drivers/base/built-in.o
-  LD      fs/built-in.o
-=======
-  CC      kernel/trace/trace.o
-  CC      arch/arm/mach-tegra/panel-a-1200-1920-7-0.o
-  CC      arch/arm/mach-tegra/panel-a-1200-800-8-0.o
-=======
-  CC      fs/f2fs/checkpoint.o
-  CC      fs/f2fs/gc.o
-  CC      sound/pci/hda/hda_intel.o
->>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
-  LD      drivers/base/built-in.o
-  CC      fs/f2fs/data.o
-  CC      kernel/trace/trace.o
-  CC      fs/f2fs/node.o
-  CC      drivers/input/touchscreen/atmel_mxt_ts.o
-  LD      sound/pci/hda/snd-hda-codec.o
-  LD      sound/pci/hda/snd-hda-codec-realtek.o
-  LD      sound/pci/hda/snd-hda-codec-cmedia.o
-  LD      sound/pci/hda/snd-hda-codec-analog.o
-  LD      sound/pci/hda/snd-hda-codec-idt.o
-  LD      sound/pci/hda/snd-hda-codec-si3054.o
-  LD      sound/pci/hda/snd-hda-codec-cirrus.o
-  LD      sound/pci/hda/snd-hda-codec-ca0110.o
-  LD      sound/pci/hda/snd-hda-codec-ca0132.o
-  LD      sound/pci/hda/snd-hda-codec-conexant.o
-  LD      sound/pci/hda/snd-hda-codec-via.o
-  LD      sound/pci/hda/snd-hda-intel.o
-  LD      sound/pci/hda/built-in.o
-  LD      sound/pci/built-in.o
-  CC      fs/f2fs/segment.o
-  LD      kernel/trace/built-in.o
->>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
-=======
-  CC      arch/arm/mach-tegra/devices.o
-  CC      arch/arm/mach-tegra/board-ardbeg-sata.o
-  CC      drivers/base/firmware_class.o
-  LD      arch/arm/mach-tegra/built-in.o
-  LD      drivers/base/built-in.o
-  CC      kernel/trace/trace.o
->>>>>>> 839079efa76... mocha:configs: mocha: disable ata
   CC      kernel/module.o
-  LD      sound/built-in.o
-  CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_core.o
-  LD      fs/f2fs/f2fs.o
-  LD      fs/f2fs/built-in.o
   GZIP    kernel/config_data.gz
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   LD      kernel/trace/built-in.o
-  LD      drivers/power/built-in.o
-=======
-  LD      drivers/mfd/built-in.o
-  CC      drivers/pinctrl/pinctrl-palmas.o
-  CC      drivers/power/bq27x00_battery.o
-  CC      drivers/power/reset/palmas-poweroff.o
-  LD      drivers/pinctrl/built-in.o
-  LD      drivers/power/reset/built-in.o
-  CC      drivers/rtc/rtc-palmas.o
-  CC      drivers/regulator/palmas-regulator.o
->>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
-=======
-  LD      fs/built-in.o
-  LD      drivers/input/touchscreen/synaptics_dsx/built-in.o
-  LD      drivers/input/touchscreen/built-in.o
-  LD      drivers/input/built-in.o
->>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
-  CHK     kernel/config_data.h
-  UPD     kernel/config_data.h
-  CC      kernel/configs.o
-  LD      kernel/built-in.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-  LD      drivers/rtc/built-in.o
-  CC      drivers/staging/iio/adc/palmas_gpadc.o
-  CC      drivers/thermal/palmas_thermal.o
-  LD      drivers/power/built-in.o
-  LD      drivers/regulator/built-in.o
-  LD      drivers/thermal/built-in.o
-  LD      drivers/staging/iio/adc/built-in.o
-  LD      drivers/staging/iio/built-in.o
-  LD      drivers/staging/built-in.o
->>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
-=======
->>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
-=======
-  CC      drivers/pci/quirks.o
-  LD      kernel/trace/built-in.o
-  LD      drivers/pci/built-in.o
-  CHK     kernel/config_data.h
-  UPD     kernel/config_data.h
-  CC      kernel/configs.o
->>>>>>> 839079efa76... mocha:configs: mocha: disable ata
   LD      drivers/built-in.o
+  CHK     kernel/config_data.h
   LD      kernel/built-in.o
   LINK    vmlinux
   LD      vmlinux.o
@@ -158,61 +63,15 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   HOSTCC  scripts/mod/file2alias.o
   HOSTLD  scripts/mod/modpost
   DTC     arch/arm/boot/dts/tegra124-mocha.dtb
+Error: arch/arm/boot/dts/tegra124-mocha.dts:345.1-2 syntax error
+scripts/Makefile.lib:277: recipe for target 'arch/arm/boot/dts/tegra124-mocha.dtb' failed
+/home/dargons10/mkernel/arch/arm/Makefile:307: recipe for target 'tegra124-mocha.dtb' failed
 [1;32m
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-Ядро скомпилировано за 00:29
-=======
-Ядро скомпилировано за 00:32
->>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
-[0m[1;32mСборка номер 87 в ветке 
-=======
-Ядро скомпилировано за 00:31
-[0m[1;32mСборка номер 89 в ветке 
->>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
-=======
 Ядро скомпилировано за 00:23
-[0m[1;32mСборка номер 91 в ветке 
->>>>>>> 839079efa76... mocha:configs: mocha: disable ata
+[0m[1;32mСборка номер 3 в ветке 
 [0m[1;32m
 Создание zip архива
 
-[0m  adding: META-INF/ (stored 0%)
-  adding: META-INF/com/ (stored 0%)
-  adding: META-INF/com/google/ (stored 0%)
-  adding: META-INF/com/google/android/ (stored 0%)
-  adding: META-INF/com/google/android/updater-script (deflated 5%)
-  adding: META-INF/com/google/android/update-binary (deflated 65%)
-  adding: anykernel.sh (deflated 70%)
-  adding: dt2w/ (stored 0%)
-  adding: dt2w/dt2w (deflated 49%)
-  adding: kernel/ (stored 0%)
-  adding: kernel/zImage (deflated 0%)
-  adding: kernel/dtb (deflated 82%)
-  adding: ramdisk/ (stored 0%)
-  adding: ramdisk/init.t124.rc (deflated 74%)
-  adding: ramdisk/init.t124.miui.rc (deflated 77%)
-  adding: tools/ (stored 0%)
-  adding: tools/unpackbootimg (deflated 34%)
-  adding: tools/ak2-core.sh (deflated 72%)
-  adding: tools/busybox (deflated 38%)
-  adding: tools/mkbootimg (deflated 34%)
-  adding: zImage_legacy (deflated 0%)
-[1;32m
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-v3.10.96(27.10.2019-09.27).zip создан, перемещение в /home/dargons10/mkernel/output[0m
-=======
-v3.10.96(26.10.2019-23.51).zip создан, перемещение в /home/dargons10/mkernel/output[0m
->>>>>>> d4119b232a9... mocha: Revert drivers: extcon: add wakelock
-=======
-v3.10.96(26.10.2019-23.56).zip создан, перемещение в /home/dargons10/mkernel/output[0m
->>>>>>> 298237c345a... mocha: configs: mocha: disable cec and hdmi
-=======
-v3.10.96(27.10.2019-00.01).zip создан, перемещение в /home/dargons10/mkernel/output[0m
->>>>>>> 839079efa76... mocha:configs: mocha: disable ata
-[1;32m
-Завершено
+[0m[1;31mФайл /home/dargons10/mkernel/arch/arm/boot/dts/tegra124-mocha.dtb не существует
+
 [0m
