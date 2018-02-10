@@ -798,16 +798,23 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   LD      drivers/video/built-in.o
 =======
   CC      init/version.o
+<<<<<<< HEAD
   LD      init/built-in.o
 <<<<<<< HEAD
   CC      kernel/sys.o
   CC      fs/f2fs/file.o
+=======
+  CC      kernel/sys.o
+  LD      init/built-in.o
+  CC      drivers/block/loop.o
+>>>>>>> 4429ab5e5cb... mocha: dts: mocha: sdhci: remove power-off-rail
   CC      drivers/base/firmware_class.o
 <<<<<<< HEAD
 <<<<<<< HEAD
   CC      fs/aio.o
   CC      kernel/trace/trace.o
   LD      drivers/base/built-in.o
+<<<<<<< HEAD
   LD      fs/built-in.o
 =======
   CC      kernel/trace/trace.o
@@ -848,6 +855,9 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   LD      drivers/base/built-in.o
   CC      kernel/trace/trace.o
 >>>>>>> 839079efa76... mocha:configs: mocha: disable ata
+=======
+  LD      drivers/block/built-in.o
+>>>>>>> 4429ab5e5cb... mocha: dts: mocha: sdhci: remove power-off-rail
   CC      kernel/module.o
   LD      sound/built-in.o
   CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_core.o
@@ -1037,6 +1047,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Ядро скомпилировано за 02:41
 [0m[1;32mСборка номер 85 в ветке 
 =======
@@ -1066,6 +1077,10 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 [0m[1;32mСборка номер 91 в ветке 
 >>>>>>> 839079efa76... mocha:configs: mocha: disable ata
 >>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
+=======
+Ядро скомпилировано за 00:21
+[0m[1;32mСборка номер 5 в ветке 
+>>>>>>> 4429ab5e5cb... mocha: dts: mocha: sdhci: remove power-off-rail
 [0m[1;32m
 Создание zip архива
 
@@ -1091,6 +1106,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   adding: tools/mkbootimg (deflated 34%)
   adding: zImage_legacy (deflated 0%)
 [1;32m
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1121,6 +1137,9 @@ v3.10.96(26.10.2019-23.56).zip создан, перемещение в /home/dar
 v3.10.96(27.10.2019-00.01).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 >>>>>>> 839079efa76... mocha:configs: mocha: disable ata
 >>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
+=======
+v3.10.96(27.10.2019-09.55).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+>>>>>>> 4429ab5e5cb... mocha: dts: mocha: sdhci: remove power-off-rail
 [1;32m
 Завершено
 [0m

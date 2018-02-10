@@ -5,6 +5,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 build_number=5
 =======
 build_number=76
@@ -30,3 +31,10 @@ build_number=89
 build_number=91
 >>>>>>> 839079efa76... mocha:configs: mocha: disable ata
 >>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
+=======
+<<<<<<< HEAD=5
+build_number=94
+=5
+build_number=96
+>>>>>>> 839079efa76... mocha:configs: mocha: disable ata=5
+>>>>>>> 4429ab5e5cb... mocha: dts: mocha: sdhci: remove power-off-rail
