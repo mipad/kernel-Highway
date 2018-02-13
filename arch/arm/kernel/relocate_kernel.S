@@ -109,7 +109,8 @@ kexec_boot_atags:
 
 	
 #ifdef CONFIG_KEXEC_HARDBOOT
-	.globl kexec_hardboot
+
+ 	.globl kexec_hardboot
 kexec_hardboot:
 	.long	0x0
 #endif
