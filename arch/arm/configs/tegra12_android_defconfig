@@ -4354,3 +4354,46 @@ CONFIG_DEFAULT_TCP_CONG="westwood"
 CONFIG_ZRAM=y
 CONFIG_ZRAM_LZ4_COMPRESS=y
 
+# twu2 tunning
+# config.gz
+CONFIG_IKCONFIG=m
+CONFIG_IKCONFIG_PROC=y
+
+# Multi-core scheduler support
+CONFIG_SCHED_MC=y
+
+# cleancache
+CONFIG_CLEANCACHE=y
+
+# frontswap
+CONFIG_FRONTSWAP=y
+
+# UTF-8 nls
+CONFIG_NLS_UTF8=y
+CONFIG_NLS_DEFAULT="utf8"
+
+# NFS
+CONFIG_NFS_FS=m
+CONFIG_ROOT_NFS=n
+
+# CIFS
+CONFIG_CIFS=m
+CONFIG_CIFS_SMB2=y
+
+# NTFS read/write
+CONFIG_NTFS_FS=n
+CONFIG_NTFS_RW=n
+
+# L2TP
+CONFIG_L2TP=m
+CONFIG_L2TP_V3=y
+CONFIG_L2TP_IP=m
+
+# page table mapping
+CONFIG_PGTABLE_MAPPING=y
+
+# zcache
+CONFIG_ZCACHE=y
+
+
+
