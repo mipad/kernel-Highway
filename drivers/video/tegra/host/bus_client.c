@@ -398,6 +398,9 @@ static int nvhost_ioctl_channel_submit(struct nvhost_channel_userctx *ctx,
 	if (num_cmdbufs < 0 || num_syncpt_incrs < 0)
 		return -EINVAL;
 
+	if (num_cmdbufs < 0 || num_syncpt_incrs < 0)
+		return -EINVAL;
+
 	job = nvhost_job_alloc(ctx->ch,
 			ctx->hwctx,
 			num_cmdbufs,
@@ -1513,3 +1516,7 @@ nvhost_client_request_firmware(struct platform_device *dev, const char *fw_name)
 	/* note: caller must release_firmware */
 	return fw;
 }
+
+EXPORT_SYMBOL(nvhost_client_request_firmware);
+
+
