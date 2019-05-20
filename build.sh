@@ -1,296 +1,182 @@
 #!/bin/bash
-# simple bash script for executing build
 
-# root directory of NetHunter Mipad1[mocha] git repo (default is this script's location)
-RDIR=$(pwd)
+export ARCH="arm"
+export KBUILD_BUILD_HOST="v1.0"
+export KBUILD_BUILD_USER="Dargons10"
 
-[ "$VER" ] ||
-# version number
-VER=$(cat "$RDIR/VERSION")
+clean_build=0
+config="mocha_user_defconfig"
+dtb_name="tegra124-mocha.dtb"
+dtb_only=0
+kernel_name=$(git rev-parse --abbrev-ref HEAD)
+threads=5
+toolchain="$HOME/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-"
 
-# directory containing cross-compile arm toolchain
-FLEVOR=NetHunterKernels
-TOOLCHAIN=$RDIR/../toolchain
-CCACHE=$RDIR/../ccache
-zImage=$RDIR/build/arch/arm/boot/zImage
-FWR=$RDIR/build/lib/firmware
-MOD=$RDIR/build/lib/modules
-TV=$RDIR/build/thevirus
-ZS=Thevirus_kernel_flasher-signed.zip
-ZIP=${FLEVOR}_${LOCALVERSION}-signed.zip
-CPU_THREADS=$(grep -c "processor" /proc/cpuinfo)
-# amount of cpu threads to use in kernel make process
-THREADS=$((CPU_THREADS + 1))
-# directory cloning cross-compile arm toolchain
+KERNEL_DIR=$PWD
+ORIGINAL_OUTPUT_DIR="$KERNEL_DIR/arch/$ARCH/boot"
+OUTPUT_DIR="$KERNEL_DIR/output"
 
- if [ -d $TOOLCHAIN ] ; then
-   find $TOOLCHAIN -type f -exec chmod a+rwx {} \;
-   echo "You have already toolchain..."
- else
-  git clone https://bitbucket.org/UBERTC/arm-eabi-4.9.git $TOOLCHAIN
-  find $TOOLCHAIN -type f -exec chmod a+rwx {} \;
-  
- fi
-############## SCARY NO-TOUCHY STUFF ###############
+ERROR=0
+HEAD=1
+WARNING=2
 
-ABORT()
+function printfc() {
+	if [[ $2 == $ERROR ]]; then
+		printf "\e[1;31m$1\e[0m"
+		return
+	fi;
+	if [[ $2 == $HEAD ]]; then
+		printf "\e[1;32m$1\e[0m"
+		return
+	fi;
+	if [[ $2 == $WARNING ]]; then
+		printf "\e[1;35m$1\e[0m"
+		return
+	fi;
+}
+
+function generate_version()
 {
-	[ "$1" ] && echo "Error: $*"
-	exit 1
+	if [[ -f "$KERNEL_DIR/.git/HEAD"  &&  -f "$KERNEL_DIR/anykernel/anykernel.sh" ]]; then
+		local updated_kernel_name
+		eval "$(awk -F"="  '/kernel.string/{print "anykernel_name="$2}' $HOME/kernel/anykernel/anykernel.sh)" 
+		eval "$(echo $kernel_name | awk -F"-"  '{print "current_branch="$2}')"
+		if [[ "$current_branch" != "stable" ]]; then
+			if [[ ! -f "$KERNEL_DIR/version" ]]; then
+				echo "build_number=0" > $KERNEL_DIR/version
+			fi;
+
+			awk -F"="  '{$2+=1; print $1"="$2}' $KERNEL_DIR/version > tmpfile
+			mv tmpfile $KERNEL_DIR/version
+			eval "$(awk -F"="  '{print "current_build="$2}' $KERNEL_DIR/version)"
+			export LOCALVERSION="-$current_branch-build$current_build"
+			updated_kernel_name=$kernel_name"-build"$current_build
+		else
+			updated_kernel_name=$kernel_name
+		fi;
+			sed -i s/$anykernel_name/$updated_kernel_name/ $KERNEL_DIR/anykernel/anykernel.sh
+	fi;
 }
 
-export ARCH=arm
-export CROSS_COMPILE=$TOOLCHAIN/bin/arm-eabi- 
-export USE_CCACHE=1
-export CCACHE_DIR=$CCACHE
-
-[ -x "${CROSS_COMPILE}gcc" ] ||
-ABORT "Unable to find gcc cross-compiler at location: ${CROSS_COMPILE}gcc"
-
-[ "$TARGET" ] || TARGET=user
-[ "$1" ] && DEVICE=$1
-[ "$DEVICE" ] || DEVICE=mocha
-
- 
-  DEFCONFIG=${DEVICE}_${TARGET}_defconfig
-  
- 
-[ -f "$RDIR/arch/$ARCH/configs/${DEFCONFIG}" ] ||
-ABORT "Config $DEFCONFIG not found in $ARCH configs!"
-
-export LOCALVERSION=-V$VER-$DEVICE
-
-CLEAN_BUILD()
+function make_zip()
 {
-        echo " "
-	echo " "
-	echo "Cleaning build.."
-	
-	rm -rf $RDIR/build
-	rm -rf $CCACHE
-	
-	echo " Done ! "
+	if [[ -d "$KERNEL_DIR/anykernel" ]]; then
+		printfc "\nСоздание zip архива\n\n" $HEAD
+	else
+		printfc "\nПапка $KERNEL_DIR/anykernel не существует\n\n" $ERROR
+		return
+	fi;
 
+	if [[ -f "$ORIGINAL_OUTPUT_DIR/zImage" ]]; then
+		mv $ORIGINAL_OUTPUT_DIR/zImage $PWD/anykernel/kernel/
+	else
+		if [[ $dtb_only == 0 ]]; then
+			printfc "Файл $ORIGINAL_OUTPUT_DIR/zImage не существует\n\n" $ERROR
+			return
+		fi
+	fi
+
+	if [[ -f "$ORIGINAL_OUTPUT_DIR/dts/$dtb_name" ]]; then
+		mv $ORIGINAL_OUTPUT_DIR/dts/$dtb_name $PWD/anykernel/kernel/dtb
+	else
+		if [[ $dtb_only == 0 ]]; then
+			printfc "Файл $ORIGINAL_OUTPUT_DIR/dts/$dtb_name не существует\n\n" $ERROR
+			return
+		fi
+	fi
+
+	cd $KERNEL_DIR/anykernel
+	local zip_name="$kernel_name($(date +'%d.%m.%Y-%H.%M')).zip"
+	zip -r $zip_name *
+
+	if [[ -f "$PWD/$zip_name" ]]; then
+		if [[ ! -d "$OUTPUT_DIR" ]]; then
+			mkdir $OUTPUT_DIR
+		fi;
+
+		printfc "\n$zip_name создан, перемещение в $OUTPUT_DIR" $HEAD
+		mv "$PWD/$zip_name" $OUTPUT_DIR
+
+		if [[ -f "$OUTPUT_DIR/$zip_name" ]]; then
+			echo
+			printfc "\nЗавершено\n" $HEAD
+		fi
+	else
+		printfc "\nНе удалось создать архив\n" $ERROR
+		return
+	fi
+	cd $KERNEL_DIR
 }
 
-SETUP_BUILD()
+function compile()
 {
-	echo "Creating kernel config for $LOCALVERSION..."
-	mkdir -p build
-	if [ -d $CCACHE ] ; then
-   echo "You have already ccache..."
-  else 
-	mkdir -p $CCACHE
-	
-fi
-	
-	make -C "$RDIR" O=build "$DEFCONFIG" \
-		|| ABORT "Failed to set up build"
+	local start=$(date +%s)
+	clear
+
+	if [[ "$clean_build" == 1 ]]; then
+		make clean
+		make mrproper
+	fi
+
+	generate_version
+	make $config
+	make -j$threads ARCH=$ARCH CROSS_COMPILE=$toolchain zImage
+
+	printfc "\nКомпиляция дерева устройства\n\n" $HEAD
+
+	make -j$threads ARCH=$ARCH CROSS_COMPILE=$toolchain $dtb_name
+
+	local end=$(date +%s)
+	local comp_time=$((end-start))
+	printf "\e[1;32m\nЯдро скомпилировано за %02d:%02d\n\e[0m" $((($comp_time/60)%60)) $(($comp_time%60))
+	printfc "Сборка номер $current_build в ветке $current_branch\n" $HEAD
+
+	make_zip
 }
 
-MENU_CONFIG()
+function compile_dtb()
 {
-	echo "Creating menu config for $LOCALVERSION..."
-	
-	make -C "$RDIR" O=build "menuconfig" \
-		|| ABORT "Failed to make menuconfig.."
+	clear
+
+	dtb_only=1
+	generate_version
+	make $config
+	make -j$threads ARCH=$ARCH CROSS_COMPILE=$toolchain $dtb_name
+
+	if [[ -f "$ORIGINAL_OUTPUT_DIR/dts/$dtb_name" ]]; then
+		mv $ORIGINAL_OUTPUT_DIR/dts/$dtb_name $PWD/anykernel/kernel/dtb
+	else
+		printfc "Файл $ORIGINAL_OUTPUT_DIR/dts/$dtb_name не существует\n\n" $ERROR
+		return
+	fi
+
+	make_zip
 }
 
-BUILD_KERNEL()
+function main()
 {
- echo " "
- echo " "
-	echo "Starting build for $LOCALVERSION..."
-	while ! make -C "$RDIR" O=build -j"$THREADS"; do
-		read -rp "Build failed. Retry? " do_retry
-		case $do_retry in
-			Y|y) continue ;;
-			*) return 1 ;;
-		esac
-	done
+	clear
+	echo "---------------------------------------------------"
+	echo "Выполнить чистую сборку?                          -"
+	echo "---------------------------------------------------"
+	echo "1 -clean_build=1;compile;;                                           -"
+	echo "---------------------------------------------------"
+	echo "2 - compile;;                                       -"
+	echo "---------------------------------------------------"
+	echo "3 - compile dtb                                   -"
+	echo "---------------------------------------------------"
+	echo "4 - return                                         -"
+	echo "---------------------------------------------------"
+	printf %s "Ваш выбор: "
+	read env
+
+	case $env in
+		1) clean_build=1;compile;;
+		2) compile;;
+		3) compile_dtb;;
+		4) clear;return;;
+		*) main;;
+	esac
 }
 
-MAKE_DTB()
-{
-	echo "Creating dtb for $LOCALVERSION..."
-	
-	make -C "$RDIR" O=build "tegra124-mocha.dtb" \
-		|| ABORT "Failed to make tegra124-mocha.dtb.."
-}
-
-INSTALL_MODULES() {
-	echo "Installing kernel modules to build/lib/modules..."
-	make -C "$RDIR" O=build \
-		INSTALL_MOD_PATH="." \
-		INSTALL_MOD_STRIP=1 \
-		modules_install
-	rm build/lib/modules/*/build build/lib/modules/*/source
-}
-MAKE_ZIP()
-{
-	echo "Making flashable zip.."
- echo " "
-if [ -d $TV ]; then
- echo "you have already cloned"
-else
- echo "Downloading required files...."
-git clone https://github.com/RahulTheVirus/kernel_flasher.git $TV
-
-  fi
-
-if [ -d $MOD ]; then
-     rm -rf $TV/src/*
-    cp -R $MOD/*/* $TV/src/ 
-         
-      fi 
-     
-if [ -f $zImage ]; then
-      rm -rf $TV/src/zImage
-     cp $zImage $TV/src/zImage
-      
-      fi
-      
-if [ -d $FWR ]; then
-    chmod 777 $TV/src/firmware
-      rm -rf $TV/firmware
-      cp -R $FWR $TV/src/
-      
-      fi
-
- cd $TV
- 
- . build.sh
- 
- if [ -f $TV/sign/$ZS ]; then
-    chmod 777 $TV/sign/$ZS
-    cp -R $TV/sign/$ZS $RDIR/$ZIP
-
-   
-    fi
-	
-	echo " Done ! "
-
-}
-echo " "
-echo " "
-
- if [ -d $RDIR/build ]; then
-  {
-echo -e -n "Do you want to clean build directory (y/n)? "
-old_stty_cfg=$(stty -g)
-stty raw -echo
-answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
-stty $old_stty_cfg
-
-   if echo "$answer" | grep -iq "^y" ;then
-       {
-       CLEAN_BUILD && 
-        SETUP_BUILD
-   echo " "    
-   echo -e -n "Do you want to make menuconfig.. (y/n)? "
-   old_stty_cfg=$(stty -g)
-   stty raw -echo
-   answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
-   stty $old_stty_cfg
-
-   if echo "$answer" | grep -iq "^y" ;then
-
-   echo " If gettin error then Please use biger size screen"
-   echo " or don't make menuconfig just edit your device defconfig file"
-
-   MENU_CONFIG
-    
-       fi
-      }
-    fi
-    
-    BUILD_KERNEL &&
-    MAKE_DTB &&
-    INSTALL_MODULES &&
-  echo "Finished building $LOCALVERSION!"   
-  
-  }
-  
-  else
-     {
-   
-  if [ ! -f $RDIR/build/.config ]; then 
-    SETUP_BUILD
-    
-    fi
-  
-   echo " "    
-   echo -e -n "Do you want to make menuconfig.. (y/n)? "
-   old_stty_cfg=$(stty -g)
-   stty raw -echo
-   answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
-   stty $old_stty_cfg
-
-   if echo "$answer" | grep -iq "^y" ;then
-
-   echo " If gettin error then Please use biger size screen"
-   echo " or don't make menuconfig just edit your device defconfig file"
-
-   MENU_CONFIG
- 
-    fi
-  
-    BUILD_KERNEL &&
-    MAKE_DTB &&
-   INSTALL_MODULES &&
-echo "Finished building $LOCALVERSION!"    
- 
-  }
-  
-  fi
-  
-if [ -f $zImage ] ; then
-   {
-echo " "
-echo " "   
-echo -e -n "Do you want to make Flashable zip.. (y/n)? "
-old_stty_cfg=$(stty -g)
-stty raw -echo
-answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
-stty $old_stty_cfg
-
-if echo "$answer" | grep -iq "^y" ;then
-
-      MAKE_ZIP &&
-   echo " "
-   echo " Collect ZIP from ${RDIR} ..."
-      
-      fi
-  }
-  
-  fi
-
-if [ -f $zImage ] ; then
-   echo " "
-   echo " "
-   echo " Alternetively you can  "
-   echo " "
-   echo " Collect zImage from build/arch/arm/boot"
-   echo " "
-   echo " Collect modules & firmware from build/lib"
-   echo " "
-   echo " You Can connect us on https://t.me/mipad1 "
-   echo " "
-   echo "                          Thanks& Regards! "
-   echo "                            RahulTheVirus! "
-   echo " "
-else
-    echo " "
-    echo "Please Review & Fix the errors"
-    echo " "
-    echo "And try again.."
-    echo " "
-    echo " You Can connect us on https://t.me/mipad1 "
-    echo " "
-    echo "                          Thanks& Regards! "
-    echo "                            RahulTheVirus! "
-    echo " "
-
- fi
-   
-cd $RDIR
+main
