@@ -3,14 +3,12 @@
  */
 #include <linux/linkage.h>
 #include <asm/kexec.h>
-<<<<<<< HEAD
-=======
+
 
 #ifdef CONFIG_KEXEC_HARDBOOT
 #include <../mach-tegra/iomap.h>
 #endif 
 
->>>>>>> 0b632be3621... 【 ॐ 】【 Added 】 --->>> kexec-hardboot patch + zram
 	.align	3	/* not needed for this code, but keeps fncpy() happy */
 ENTRY(relocate_new_kernel)
 	ldr	r0,kexec_indirection_page
