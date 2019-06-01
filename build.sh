@@ -1,8 +1,8 @@
 #!/bin/bash
 
 export ARCH="arm"
-export KBUILD_BUILD_HOST="v1.0"
-export KBUILD_BUILD_USER="Dargons10"
+export KBUILD_BUILD_HOST="eOS-5.0-Juno"
+export KBUILD_BUILD_USER="arttttt"
 
 clean_build=0
 config="mocha_user_defconfig"
@@ -180,4 +180,3 @@ function main()
 }
 
 main
-
