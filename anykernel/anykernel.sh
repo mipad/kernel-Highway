@@ -3,7 +3,7 @@
 
 ## AnyKernel setup
 # EDIFY properties
-kernel.string=SmokeKernel 1.3.5
+kernel.string=DargonsKernel v2.0
 do.devicecheck=1
 do.initd=1
 do.modules=0

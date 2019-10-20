@@ -1,0 +1,230 @@
+[3J[H[2J---------------------------------------------------
+Выполнить чистую сборку?                          -
+---------------------------------------------------
+1 -clean_build=1;compile;;                                           -
+---------------------------------------------------
+2 - compile;;                                       -
+---------------------------------------------------
+3 - compile dtb                                   -
+---------------------------------------------------
+4 - return                                         -
+---------------------------------------------------
+Ваш выбор: [3J[H[2J#
+# configuration written to .config
+#
+scripts/kconfig/conf --silentoldconfig Kconfig
+  CHK     include/generated/uapi/linux/version.h
+  UPD     include/generated/uapi/linux/version.h
+  CC      scripts/mod/devicetable-offsets.s
+  GEN     scripts/mod/devicetable-offsets.h
+  HOSTCC  scripts/mod/file2alias.o
+  CHK     include/generated/utsrelease.h
+  UPD     include/generated/utsrelease.h
+make[1]: 'include/generated/mach-types.h' está actualizado.
+  CALL    scripts/checksyscalls.sh
+  HOSTLD  scripts/mod/modpost
+  CHK     include/generated/compile.h
+  CC      init/version.o
+  CC      mm/filemap.o
+  LD      init/built-in.o
+  CC      kernel/sys.o
+  CC      arch/arm/mach-tegra/board-ardbeg-sensors.o
+  CC      crypto/api.o
+  LD      arch/arm/mach-tegra/built-in.o
+  CC      fs/pstore/ram.o
+  LD      mm/built-in.o
+  CC      crypto/algapi.o
+  CC      crypto/ablkcipher.o
+  CC      kernel/trace/trace.o
+  LD      fs/pstore/pstore.o
+  LD      fs/pstore/ramoops.o
+  LD      fs/pstore/built-in.o
+  LD      fs/built-in.o
+  LD      crypto/crypto_hash.o
+  CC      drivers/base/firmware_class.o
+  LD      crypto/cryptomgr.o
+  LD      crypto/crypto.o
+  CC      drivers/bluetooth/broadcom/bt_protocol_driver/brcm_bt_drv.o
+  LD      crypto/crypto_algapi.o
+  LD      crypto/crypto_blkcipher.o
+  LD      crypto/built-in.o
+  CC      drivers/bluetooth/broadcom/line_discipline_driver/brcm_sh_ldisc.o
+  LD      drivers/bluetooth/broadcom/bt_protocol_driver/built-in.o
+  CC      drivers/bluetooth/broadcom/v4l2_fm_driver/fmdrv_main.o
+  LD      drivers/base/built-in.o
+  CC      drivers/bluetooth/broadcom/v4l2_fm_driver/fmdrv_v4l2.o
+  LD      drivers/bluetooth/broadcom/line_discipline_driver/brcm_hci_ldisc.o
+  LD      drivers/bluetooth/broadcom/line_discipline_driver/built-in.o
+  LD      kernel/trace/built-in.o
+  CC      drivers/char/frandom.o
+  CC      kernel/module.o
+  CC      drivers/bluetooth/broadcom/v4l2_fm_driver/fmdrv_rx.o
+  GZIP    kernel/config_data.gz
+  LD      drivers/char/built-in.o
+  CC      net/mhi/l3mhdp.o
+  LD      drivers/bluetooth/broadcom/v4l2_fm_driver/fm_drv.o
+  LD      drivers/bluetooth/broadcom/v4l2_fm_driver/built-in.o
+  LD      drivers/bluetooth/broadcom/built-in.o
+  LD      drivers/bluetooth/built-in.o
+  LD      net/mhi/built-in.o
+  LD      net/built-in.o
+  CHK     kernel/config_data.h
+  UPD     kernel/config_data.h
+  CC      kernel/configs.o
+  CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_i2c.o
+  CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_core.o
+  CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_rmi_dev.o
+  LD      kernel/built-in.o
+  CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_fw_update.o
+  CC      drivers/input/touchscreen/synaptics_dsx/synaptics_dsx_test_reporting.o
+  CC      drivers/misc/c2port/c2port-loki.o
+  LD      drivers/misc/c2port/built-in.o
+  CC      drivers/media/v4l2-core/v4l2-dev.o
+  LD      drivers/misc/built-in.o
+  CC      drivers/media/v4l2-core/v4l2-ioctl.o
+  CC      drivers/media/usb/uvc/uvc_driver.o
+  CC      drivers/media/v4l2-core/v4l2-device.o
+  CC      drivers/media/usb/uvc/uvc_queue.o
+  CC      drivers/media/v4l2-core/v4l2-fh.o
+  CC      drivers/media/v4l2-core/v4l2-event.o
+  CC      drivers/media/usb/uvc/uvc_v4l2.o
+  CC      drivers/media/v4l2-core/v4l2-ctrls.o
+  CC      drivers/media/v4l2-core/v4l2-subdev.o
+  CC      drivers/media/usb/uvc/uvc_video.o
+  LD      drivers/input/touchscreen/synaptics_dsx/built-in.o
+  LD      drivers/input/touchscreen/built-in.o
+  LD      drivers/input/built-in.o
+  CC      drivers/nfc/bcm2079x-i2c.o
+  CC      drivers/net/wireless/bcmdhd/dhd_pno.o
+  CC      drivers/net/wireless/bcmdhd/dhd_common.o
+  LD      drivers/nfc/built-in.o
+  CC      drivers/media/usb/uvc/uvc_ctrl.o
+  CC      drivers/net/wireless/bcmdhd/dhd_ip.o
+  CC      drivers/media/v4l2-core/v4l2-common.o
+  CC      drivers/media/usb/uvc/uvc_status.o
+  CC      drivers/media/v4l2-core/videobuf2-core.o
+  CC      drivers/net/wireless/bcmdhd/dhd_custom_gpio.o
+  CC      drivers/media/usb/uvc/uvc_isight.o
+  CC      drivers/media/usb/uvc/uvc_debugfs.o
+  CC      drivers/net/wireless/bcmdhd/dhd_linux.o
+  CC      drivers/net/wireless/bcmdhd/dhd_linux_sched.o
+  LD      drivers/media/usb/uvc/uvcvideo.o
+  LD      drivers/media/usb/uvc/built-in.o
+  CC      drivers/net/wireless/bcmdhd/dhd_cfg80211.o
+  LD      drivers/media/usb/built-in.o
+  CC      drivers/net/wireless/bcmdhd/dhd_linux_wq.o
+  LD      drivers/media/v4l2-core/videodev.o
+  LD      drivers/media/v4l2-core/built-in.o
+  LD      drivers/media/built-in.o
+  CC      drivers/net/wireless/bcmdhd/aiutils.o
+  CC      drivers/tspdrv/tspdrv.o
+  CC      drivers/staging/ozwpan/ozkobject.o
+  CC      drivers/net/wireless/bcmdhd/bcmevent.o
+  LD      drivers/staging/ozwpan/ozwpan.o
+  LD      drivers/staging/ozwpan/built-in.o
+  LD      drivers/staging/built-in.o
+  LD      drivers/tspdrv/built-in.o
+  CC      drivers/net/wireless/bcmdhd/bcmutils.o
+  CC      drivers/net/wireless/bcmdhd/bcmwifi_channels.o
+  CC      drivers/usb/core/hcd.o
+  CC      drivers/net/wireless/bcmdhd/hndpmu.o
+  CC      drivers/net/wireless/bcmdhd/linux_osl.o
+  CC      drivers/net/wireless/bcmdhd/sbutils.o
+  CC      drivers/net/wireless/bcmdhd/siutils.o
+  CC      drivers/net/wireless/bcmdhd/wl_android.o
+  LD      drivers/usb/core/usbcore.o
+  LD      drivers/usb/core/built-in.o
+  CC      drivers/usb/gadget/android.o
+  CC      drivers/net/wireless/bcmdhd/wl_cfg80211.o
+  CC      drivers/usb/gadget/config.o
+  CC      drivers/net/wireless/bcmdhd/wl_cfgp2p.o
+  CC      drivers/usb/host/xhci-ring.o
+  CC      drivers/net/wireless/bcmdhd/wl_cfg_btcoex.o
+  CC      drivers/net/wireless/bcmdhd/wldev_common.o
+  CC      drivers/usb/gadget/composite.o
+  LD      drivers/usb/host/xhci-hcd.o
+  CC      drivers/net/wireless/bcmdhd/wl_linux_mon.o
+  LD      drivers/usb/host/built-in.o
+  CC      drivers/net/wireless/bcmdhd/dhd_linux_platdev.o
+  CC      drivers/net/wireless/bcmdhd/dhd_qmon.o
+  CC      drivers/usb/gadget/functions.o
+  CC      drivers/net/wireless/bcmdhd/bcmsdh.o
+  CC      drivers/net/wireless/bcmdhd/bcmsdh_linux.o
+  CC      drivers/net/wireless/bcmdhd/bcmsdh_sdmmc.o
+  CC      drivers/net/wireless/bcmdhd/bcmsdh_sdmmc_linux.o
+  CC      drivers/usb/gadget/configfs.o
+  CC      drivers/net/wireless/bcmdhd/dhd_cdc.o
+  CC      drivers/usb/gadget/f_acm.o
+  CC      drivers/net/wireless/bcmdhd/dhd_wlfc.o
+  CC      drivers/net/wireless/bcmdhd/dhd_sdio.o
+  CC      drivers/usb/gadget/u_serial.o
+  LD      drivers/usb/gadget/g_android.o
+  LD      drivers/usb/gadget/libcomposite.o
+  LD      drivers/usb/gadget/usb_f_acm.o
+  LD      drivers/usb/gadget/built-in.o
+  LD      drivers/usb/built-in.o
+  LD      drivers/net/wireless/bcmdhd/bcmdhd.o
+  LD      drivers/net/wireless/bcmdhd/built-in.o
+  LD      drivers/net/wireless/built-in.o
+  LD      drivers/net/built-in.o
+  LD      drivers/built-in.o
+  LINK    vmlinux
+  LD      vmlinux.o
+  MODPOST vmlinux.o
+  GEN     .version
+  CHK     include/generated/compile.h
+  UPD     include/generated/compile.h
+  CC      init/version.o
+  LD      init/built-in.o
+  KSYM    .tmp_kallsyms1.o
+  KSYM    .tmp_kallsyms2.o
+  LD      vmlinux
+  SORTEX  vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm/boot/Image
+  Kernel: arch/arm/boot/Image is ready
+  GZIP    arch/arm/boot/compressed/piggy.gzip
+  AS      arch/arm/boot/compressed/piggy.gzip.o
+  LD      arch/arm/boot/compressed/vmlinux
+  OBJCOPY arch/arm/boot/zImage
+  Kernel: arch/arm/boot/zImage is ready
+[1;32m
+Компиляция дерева устройства
+
+[0m  CC      scripts/mod/devicetable-offsets.s
+  GEN     scripts/mod/devicetable-offsets.h
+  HOSTCC  scripts/mod/file2alias.o
+  HOSTLD  scripts/mod/modpost
+  DTC     arch/arm/boot/dts/tegra124-mocha.dtb
+[1;32m
+Ядро скомпилировано за 00:45
+[0m[1;32mСборка номер 39 в ветке 
+[0m[1;32m
+Создание zip архива
+
+[0m  adding: META-INF/ (stored 0%)
+  adding: META-INF/com/ (stored 0%)
+  adding: META-INF/com/google/ (stored 0%)
+  adding: META-INF/com/google/android/ (stored 0%)
+  adding: META-INF/com/google/android/updater-script (deflated 5%)
+  adding: META-INF/com/google/android/update-binary (deflated 65%)
+  adding: anykernel.sh (deflated 70%)
+  adding: dt2w/ (stored 0%)
+  adding: dt2w/dt2w (deflated 49%)
+  adding: kernel/ (stored 0%)
+  adding: kernel/zImage (deflated 0%)
+  adding: kernel/dtb (deflated 84%)
+  adding: ramdisk/ (stored 0%)
+  adding: ramdisk/init.t124.rc (deflated 76%)
+  adding: ramdisk/init.t124.miui.rc (deflated 77%)
+  adding: tools/ (stored 0%)
+  adding: tools/unpackbootimg (deflated 34%)
+  adding: tools/ak2-core.sh (deflated 72%)
+  adding: tools/busybox (deflated 38%)
+  adding: tools/mkbootimg (deflated 34%)
+  adding: zImage_legacy (deflated 0%)
+[1;32m
+v3.10.96(20.10.2019-00.52).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+[1;32m
+Завершено
+[0m

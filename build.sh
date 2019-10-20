@@ -1,8 +1,8 @@
 #!/bin/bash
 
 export ARCH="arm"
-export KBUILD_BUILD_HOST="eOS-5.0-Juno"
-export KBUILD_BUILD_USER="arttttt"
+export KBUILD_BUILD_HOST="kernel v2.0"
+export KBUILD_BUILD_USER="Dargons"
 
 clean_build=0
 config="mocha_user_defconfig"
