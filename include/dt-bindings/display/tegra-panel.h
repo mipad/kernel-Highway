@@ -1,7 +1,7 @@
 /*
  * include/dt-bindings/display/tegra-panel.h
  *
- * Copyright (c) 2013, NVIDIA CORPORATION.  All rights reserved.
+ * Copyright (c) 2013-2014, NVIDIA CORPORATION.  All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms and conditions of the GNU General Public License,
@@ -60,6 +60,9 @@
 #define	TEGRA_DSI_VIDEO_CLOCK_CONTINUOUS 0
 #define	TEGRA_DSI_VIDEO_CLOCK_TX_ONLY    1
 
+#define CMD_NOT_CLUBBED	0
+#define CMD_CLUBBED	1
+
 #define DSI_GENERIC_LONG_WRITE			0x29
 #define DSI_DCS_LONG_WRITE			0x39
 #define DSI_GENERIC_SHORT_WRITE_1_PARAMS	0x13
@@ -113,5 +116,11 @@
 
 #define DSI_INSTANCE_0 0
 #define DSI_INSTANCE_1 1
+
+/* Aggressiveness level of DSI suspend. The higher, the more aggressive. */
+#define DSI_NO_SUSPEND			0
+#define DSI_HOST_SUSPEND_LV0		1
+#define DSI_HOST_SUSPEND_LV1		2
+#define DSI_HOST_SUSPEND_LV2		3
 
 #endif /* __TEGRA_PANEL_H */
