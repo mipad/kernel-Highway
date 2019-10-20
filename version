@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 build_number=74
 =======
 build_number=87
@@ -15,3 +16,6 @@ build_number=64
 =======
 build_number=69
 >>>>>>> 2b6696a3c0f... mocha: drivers: platform: tegra: add serial number parsing
+=======
+build_number=54
+>>>>>>> 8a2a9e71d92... mocha:mocha: add rt5671 and tfa9890
