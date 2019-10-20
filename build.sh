@@ -5,7 +5,7 @@ export KBUILD_BUILD_HOST="kernel v2.0"
 export KBUILD_BUILD_USER="Dargons"
 
 clean_build=0
-config="mocha_user_defconfig"
+config="tegra12_android_defconfig"
 dtb_name="tegra124-mocha.dtb"
 dtb_only=0
 kernel_name=$(git rev-parse --abbrev-ref HEAD)
