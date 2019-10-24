@@ -16,8 +16,8 @@ scripts/kconfig/conf --silentoldconfig Kconfig
   CHK     include/generated/uapi/linux/version.h
   CHK     include/generated/utsrelease.h
   UPD     include/generated/utsrelease.h
-make[1]: 'include/generated/mach-types.h' está actualizado.
   CC      scripts/mod/devicetable-offsets.s
+make[1]: 'include/generated/mach-types.h' está actualizado.
   CALL    scripts/checksyscalls.sh
   GEN     scripts/mod/devicetable-offsets.h
   HOSTCC  scripts/mod/file2alias.o
@@ -26,19 +26,50 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   CC      init/version.o
   CC      kernel/sys.o
   LD      init/built-in.o
-  CC      kernel/trace/trace.o
+  CC      arch/arm/mach-tegra/board-ardbeg-sdhci.o
+  CC      arch/arm/mach-tegra/board-loki-sdhci.o
   CC      drivers/base/firmware_class.o
-  CC      fs/pstore/platform.o
-  LD      fs/pstore/pstore.o
-  LD      fs/pstore/ramoops.o
-  LD      fs/pstore/built-in.o
+  LD      arch/arm/mach-tegra/built-in.o
+  CC      kernel/trace/trace.o
   LD      drivers/base/built-in.o
-  LD      fs/built-in.o
   CC      kernel/module.o
-  GZIP    kernel/config_data.gz
+  CC      drivers/mmc/card/block.o
+  CC      drivers/mmc/card/queue.o
   LD      kernel/trace/built-in.o
+  CC      drivers/mmc/card/mmc_test.o
+  GZIP    kernel/config_data.gz
+  LD      drivers/mmc/card/mmc_block.o
+  CC      drivers/net/wireless/bcmdhd/bcmsdh_sdmmc.o
   CHK     kernel/config_data.h
   LD      kernel/built-in.o
+  CC      drivers/mmc/core/core.o
+  CC      drivers/mmc/host/sdhci.o
+  LD      drivers/mmc/card/built-in.o
+  CC      drivers/mmc/core/bus.o
+  CC      drivers/net/wireless/bcmdhd/bcmsdh_sdmmc_linux.o
+  CC      drivers/mmc/core/host.o
+  LD      drivers/net/wireless/bcmdhd/bcmdhd.o
+  LD      drivers/net/wireless/bcmdhd/built-in.o
+  CC      drivers/mmc/core/mmc.o
+  LD      drivers/net/wireless/built-in.o
+  LD      drivers/net/built-in.o
+  CC      drivers/mmc/core/mmc_ops.o
+  CC      drivers/mmc/core/sd.o
+  CC      drivers/mmc/core/sd_ops.o
+  CC      drivers/mmc/core/sdio.o
+  CC      drivers/mmc/core/sdio_ops.o
+  CC      drivers/mmc/core/sdio_bus.o
+  CC      drivers/mmc/host/sdhci-pltfm.o
+  CC      drivers/mmc/core/sdio_cis.o
+  CC      drivers/mmc/core/sdio_io.o
+  CC      drivers/mmc/core/sdio_irq.o
+  CC      drivers/mmc/host/sdhci-tegra.o
+  CC      drivers/mmc/core/slot-gpio.o
+  CC      drivers/mmc/core/debugfs.o
+  LD      drivers/mmc/core/mmc_core.o
+  LD      drivers/mmc/core/built-in.o
+  LD      drivers/mmc/host/built-in.o
+  LD      drivers/mmc/built-in.o
   LD      drivers/built-in.o
   LINK    vmlinux
   LD      vmlinux.o
@@ -67,10 +98,10 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   GEN     scripts/mod/devicetable-offsets.h
   HOSTCC  scripts/mod/file2alias.o
   HOSTLD  scripts/mod/modpost
-  DTC     arch/arm/boot/dts/tegra124-mocha.dtb
+make[1]: 'arch/arm/boot/dts/tegra124-mocha.dtb' está actualizado.
 [1;32m
-Ядро скомпилировано за 00:22
-[0m[1;32mСборка номер 61 в ветке 
+Ядро скомпилировано за 00:28
+[0m[1;32mСборка номер 64 в ветке 
 [0m[1;32m
 Создание zip архива
 
@@ -96,7 +127,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   adding: tools/mkbootimg (deflated 34%)
   adding: zImage_legacy (deflated 0%)
 [1;32m
-v3.10.96(24.10.2019-21.50).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+v3.10.96(24.10.2019-22.53).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 [1;32m
 Завершено
 [0m
