@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 build_number=74
 =======
 build_number=87
@@ -7,3 +8,6 @@ build_number=87
 =======
 build_number=61
 >>>>>>> 26547f6d3da... mocha: tegra: reboot: mocha: FIXME: disable reboot by PSCI0.2 and by PMC
+=======
+build_number=64
+>>>>>>> 20248b85b8c... mocha: arch: arm: configs: mocha: disable zram
