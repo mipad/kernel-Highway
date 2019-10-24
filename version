@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 build_number=74
 =======
 build_number=87
@@ -19,3 +20,6 @@ build_number=69
 =======
 build_number=54
 >>>>>>> 8a2a9e71d92... mocha:mocha: add rt5671 and tfa9890
+=======
+build_number=70
+>>>>>>> f0162029015... mocha: configs: mocha: enable elementalx
