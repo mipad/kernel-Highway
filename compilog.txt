@@ -24,25 +24,17 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   HOSTLD  scripts/mod/modpost
   CHK     include/generated/compile.h
   CC      init/version.o
-  LD      init/built-in.o
   CC      kernel/sys.o
+  LD      init/built-in.o
+  CC      kernel/workqueue.o
   CC      drivers/base/firmware_class.o
-  LD      fs/built-in.o
-  CC      kernel/trace/trace.o
   LD      drivers/base/built-in.o
-  CC      net/ipv4/tcp_cong.o
-  CC      drivers/cpufreq/cpufreq_stats.o
-  LD      drivers/cpufreq/built-in.o
-  CC      net/ipv4/tcp_westwood.o
-  LD      net/ipv4/built-in.o
+  CC      kernel/trace/trace.o
   CC      kernel/module.o
-  LD      net/built-in.o
   GZIP    kernel/config_data.gz
   LD      kernel/trace/built-in.o
   LD      drivers/built-in.o
   CHK     kernel/config_data.h
-  UPD     kernel/config_data.h
-  CC      kernel/configs.o
   LD      kernel/built-in.o
   LINK    vmlinux
   LD      vmlinux.o
@@ -71,10 +63,10 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   GEN     scripts/mod/devicetable-offsets.h
   HOSTCC  scripts/mod/file2alias.o
   HOSTLD  scripts/mod/modpost
-  DTC     arch/arm/boot/dts/tegra124-mocha.dtb
+make[1]: 'arch/arm/boot/dts/tegra124-mocha.dtb' está actualizado.
 [1;32m
-Ядро скомпилировано за 00:30
-[0m[1;32mСборка номер 78 в ветке 
+Ядро скомпилировано за 00:22
+[0m[1;32mСборка номер 83 в ветке 
 [0m[1;32m
 Создание zip архива
 
@@ -100,7 +92,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   adding: tools/mkbootimg (deflated 34%)
   adding: zImage_legacy (deflated 0%)
 [1;32m
-v3.10.96(25.10.2019-20.50).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+v3.10.96(25.10.2019-23.21).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 [1;32m
 Завершено
 [0m
