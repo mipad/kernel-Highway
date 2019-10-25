@@ -22,8 +22,37 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   HOSTCC  scripts/mod/file2alias.o
   HOSTLD  scripts/mod/modpost
   CHK     include/generated/compile.h
+<<<<<<< HEAD
+=======
+  CC      init/version.o
+  CC      kernel/sys.o
+  LD      init/built-in.o
+  CC      kernel/workqueue.o
+  CC      drivers/base/firmware_class.o
+  LD      drivers/base/built-in.o
+  CC      kernel/trace/trace.o
+  CC      kernel/module.o
+>>>>>>> aeaed840883... mocha:workqueue: Add system wide power_efficient workqueues
   GZIP    kernel/config_data.gz
   CHK     kernel/config_data.h
+<<<<<<< HEAD
+=======
+  LD      kernel/built-in.o
+  LINK    vmlinux
+  LD      vmlinux.o
+  MODPOST vmlinux.o
+  GEN     .version
+  CHK     include/generated/compile.h
+  UPD     include/generated/compile.h
+  CC      init/version.o
+  LD      init/built-in.o
+  KSYM    .tmp_kallsyms1.o
+  KSYM    .tmp_kallsyms2.o
+  LD      vmlinux
+  SORTEX  vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm/boot/Image
+>>>>>>> aeaed840883... mocha:workqueue: Add system wide power_efficient workqueues
   Kernel: arch/arm/boot/Image is ready
   AS      arch/arm/boot/compressed/piggy.gzip.o
   CC      arch/arm/boot/compressed/misc.o
@@ -37,10 +66,15 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   GEN     scripts/mod/devicetable-offsets.h
   HOSTCC  scripts/mod/file2alias.o
   HOSTLD  scripts/mod/modpost
-  DTC     arch/arm/boot/dts/tegra124-mocha.dtb
+make[1]: 'arch/arm/boot/dts/tegra124-mocha.dtb' está actualizado.
 [1;32m
+<<<<<<< HEAD
 Ядро скомпилировано за 00:08
 [0m[1;32mСборка номер 70 в ветке 
+=======
+Ядро скомпилировано за 00:22
+[0m[1;32mСборка номер 83 в ветке 
+>>>>>>> aeaed840883... mocha:workqueue: Add system wide power_efficient workqueues
 [0m[1;32m
 Создание zip архива
 
@@ -66,7 +100,11 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   adding: tools/mkbootimg (deflated 34%)
   adding: zImage_legacy (deflated 0%)
 [1;32m
+<<<<<<< HEAD
 v3.10.96(24.10.2019-23.42).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+=======
+v3.10.96(25.10.2019-23.21).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+>>>>>>> aeaed840883... mocha:workqueue: Add system wide power_efficient workqueues
 [1;32m
 Завершено
 [0m
