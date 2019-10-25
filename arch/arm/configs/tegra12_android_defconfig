@@ -4621,4 +4621,9 @@ CONFIG_BCM4354=y
 CONFIG_BCMDHD_HW_OOB=y
 CONFIG_BCMDHD_DISABLE_MCC=y
 
+<<<<<<< HEAD
+=======
+FS
+CONFIG_SDCARD_FS=y
+>>>>>>> 968baf8d0c2... mocha:configs: mocha: enable sdcardfs
 
