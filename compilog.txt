@@ -26,6 +26,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   CC      arch/arm/common/firmware.o
   CHK     include/generated/compile.h
 <<<<<<< HEAD
+<<<<<<< HEAD
   CC      arch/arm/mm/init.o
   CC      arch/arm/kernel/bootinfo.o
   LD      arch/arm/common/built-in.o
@@ -1011,9 +1012,26 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   UPD     kernel/config_data.h
   CC      kernel/configs.o
 >>>>>>> 839079efa76... mocha:configs: mocha: disable ata
+=======
+  CC      init/version.o
+  CC      kernel/sys.o
+  LD      init/built-in.o
+  CC      drivers/android/binder.o
+  CC      drivers/base/firmware_class.o
+  CC      kernel/trace/trace.o
+  LD      drivers/base/built-in.o
+  CC      kernel/module.o
+  LD      kernel/trace/built-in.o
+  GZIP    kernel/config_data.gz
+  LD      drivers/android/built-in.o
+>>>>>>> afb1fe82ead... mocha: update binder.c
   LD      drivers/built-in.o
+  CHK     kernel/config_data.h
   LD      kernel/built-in.o
+<<<<<<< HEAD
 >>>>>>> 742323c2603... mocha: mocha:configs: mocha: disable ata
+=======
+>>>>>>> afb1fe82ead... mocha: update binder.c
   LINK    vmlinux
   LD      vmlinux.o
   MODPOST vmlinux.o
@@ -1043,6 +1061,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   HOSTLD  scripts/mod/modpost
   DTC     arch/arm/boot/dts/tegra124-mocha.dtb
 [1;32m
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1081,6 +1100,10 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
 Ядро скомпилировано за 00:21
 [0m[1;32mСборка номер 5 в ветке 
 >>>>>>> 4429ab5e5cb... mocha: dts: mocha: sdhci: remove power-off-rail
+=======
+Ядро скомпилировано за 00:23
+[0m[1;32mСборка номер 10 в ветке 
+>>>>>>> afb1fe82ead... mocha: update binder.c
 [0m[1;32m
 Создание zip архива
 
@@ -1106,6 +1129,7 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   adding: tools/mkbootimg (deflated 34%)
   adding: zImage_legacy (deflated 0%)
 [1;32m
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1140,6 +1164,9 @@ v3.10.96(27.10.2019-00.01).zip создан, перемещение в /home/dar
 =======
 v3.10.96(27.10.2019-09.55).zip создан, перемещение в /home/dargons10/mkernel/output[0m
 >>>>>>> 4429ab5e5cb... mocha: dts: mocha: sdhci: remove power-off-rail
+=======
+v3.10.96(27.10.2019-10.37).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+>>>>>>> afb1fe82ead... mocha: update binder.c
 [1;32m
 Завершено
 [0m
