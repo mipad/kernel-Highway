@@ -1,0 +1,76 @@
+[3J[H[2J---------------------------------------------------
+Выполнить чистую сборку?                          -
+---------------------------------------------------
+1 -clean_build=1;compile;;                                           -
+---------------------------------------------------
+2 - compile;;                                       -
+---------------------------------------------------
+3 - compile dtb                                   -
+---------------------------------------------------
+4 - return                                         -
+---------------------------------------------------
+Ваш выбор: [3J[H[2J#
+# configuration written to .config
+#
+scripts/kconfig/conf --silentoldconfig Kconfig
+  CHK     include/generated/uapi/linux/version.h
+  CHK     include/generated/utsrelease.h
+  UPD     include/generated/utsrelease.h
+  CC      scripts/mod/devicetable-offsets.s
+make[1]: 'include/generated/mach-types.h' está actualizado.
+  CALL    scripts/checksyscalls.sh
+  GEN     scripts/mod/devicetable-offsets.h
+  HOSTCC  scripts/mod/file2alias.o
+  HOSTLD  scripts/mod/modpost
+  CHK     include/generated/compile.h
+  CC      init/version.o
+  LD      init/built-in.o
+  CC      kernel/sys.o
+  CC      drivers/base/firmware_class.o
+  CC      kernel/trace/trace.o
+  LD      drivers/base/built-in.o
+  CC      kernel/module.o
+  GZIP    kernel/config_data.gz
+  LD      kernel/trace/built-in.o
+  LD      drivers/built-in.o
+  CHK     kernel/config_data.h
+  LD      kernel/built-in.o
+  LINK    vmlinux
+  LD      vmlinux.o
+  MODPOST vmlinux.o
+  GEN     .version
+  CHK     include/generated/compile.h
+  UPD     include/generated/compile.h
+  CC      init/version.o
+  LD      init/built-in.o
+  KSYM    .tmp_kallsyms1.o
+  KSYM    .tmp_kallsyms2.o
+  LD      vmlinux
+  SORTEX  vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm/boot/Image
+  Kernel: arch/arm/boot/Image is ready
+  GZIP    arch/arm/boot/compressed/piggy.gzip
+  AS      arch/arm/boot/compressed/piggy.gzip.o
+  LD      arch/arm/boot/compressed/vmlinux
+  OBJCOPY arch/arm/boot/zImage
+  Kernel: arch/arm/boot/zImage is ready
+[1;32m
+Компиляция дерева устройства
+
+[0m  CC      scripts/mod/devicetable-offsets.s
+  GEN     scripts/mod/devicetable-offsets.h
+  HOSTCC  scripts/mod/file2alias.o
+  HOSTLD  scripts/mod/modpost
+  DTC     arch/arm/boot/dts/tegra124-mocha.dtb
+scripts/Makefile.lib:272: recipe for target 'arch/arm/boot/dts/tegra124-mocha.dtb' failed
+/home/dargons10/mkernel/arch/arm/Makefile:307: recipe for target 'tegra124-mocha.dtb' failed
+[1;32m
+Ядро скомпилировано за 00:23
+[0m[1;32mСборка номер 14 в ветке 
+[0m[1;32m
+Создание zip архива
+
+[0m[1;31mФайл /home/dargons10/mkernel/arch/arm/boot/dts/tegra124-mocha.dtb не существует
+
+[0m
