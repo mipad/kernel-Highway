@@ -24,30 +24,37 @@ make[1]: 'include/generated/mach-types.h' está actualizado.
   HOSTLD  scripts/mod/modpost
   CHK     include/generated/compile.h
   CC      init/version.o
-  LD      init/built-in.o
   CC      kernel/sys.o
-  CC      arch/arm/mach-tegra/tegra12_edp.o
-  LD      arch/arm/mach-tegra/built-in.o
+  LD      init/built-in.o
+  CC      drivers/android/binder.o
   CC      drivers/base/firmware_class.o
   CC      kernel/trace/trace.o
   LD      drivers/base/built-in.o
-  AS      arch/arm/lib/copy_from_user.o
-  AS      arch/arm/lib/copy_to_user.o
-  AS      arch/arm/lib/memcpy.o
-  AS      arch/arm/lib/memmove.o
-  AR      arch/arm/lib/lib.a
-  CC      kernel/module.o
+  LD      drivers/android/built-in.o
   LD      kernel/trace/built-in.o
-  CC      drivers/usb/gadget/tegra_udc.o
+  CC      kernel/module.o
+  LD      drivers/built-in.o
   LD      kernel/built-in.o
-  CC      drivers/video/tegra/dc/dc_sysfs.o
-scripts/Makefile.build:308: recipe for target 'drivers/video/tegra/dc/dc_sysfs.o' failed
-scripts/Makefile.build:455: recipe for target 'drivers/video/tegra/dc' failed
-scripts/Makefile.build:455: recipe for target 'drivers/video/tegra' failed
-scripts/Makefile.build:455: recipe for target 'drivers/video' failed
-  LD      drivers/usb/gadget/built-in.o
-  LD      drivers/usb/built-in.o
-Makefile:804: recipe for target 'drivers' failed
+  LINK    vmlinux
+  LD      vmlinux.o
+  MODPOST vmlinux.o
+  GEN     .version
+  CHK     include/generated/compile.h
+  UPD     include/generated/compile.h
+  CC      init/version.o
+  LD      init/built-in.o
+  KSYM    .tmp_kallsyms1.o
+  KSYM    .tmp_kallsyms2.o
+  LD      vmlinux
+  SORTEX  vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm/boot/Image
+  Kernel: arch/arm/boot/Image is ready
+  GZIP    arch/arm/boot/compressed/piggy.gzip
+  AS      arch/arm/boot/compressed/piggy.gzip.o
+  LD      arch/arm/boot/compressed/vmlinux
+  OBJCOPY arch/arm/boot/zImage
+  Kernel: arch/arm/boot/zImage is ready
 [1;32m
 Компиляция дерева устройства
 
@@ -57,11 +64,34 @@ Makefile:804: recipe for target 'drivers' failed
   HOSTLD  scripts/mod/modpost
   DTC     arch/arm/boot/dts/tegra124-mocha.dtb
 [1;32m
-Ядро скомпилировано за 00:10
-[0m[1;32mСборка номер 24 в ветке 
+Ядро скомпилировано за 00:24
+[0m[1;32mСборка номер 29 в ветке 
 [0m[1;32m
 Создание zip архива
 
-[0m[1;31mФайл /home/dargons10/mkernel/arch/arm/boot/zImage не существует
-
+[0m  adding: META-INF/ (stored 0%)
+  adding: META-INF/com/ (stored 0%)
+  adding: META-INF/com/google/ (stored 0%)
+  adding: META-INF/com/google/android/ (stored 0%)
+  adding: META-INF/com/google/android/updater-script (deflated 5%)
+  adding: META-INF/com/google/android/update-binary (deflated 65%)
+  adding: anykernel.sh (deflated 70%)
+  adding: dt2w/ (stored 0%)
+  adding: dt2w/dt2w (deflated 49%)
+  adding: kernel/ (stored 0%)
+  adding: kernel/zImage (deflated 0%)
+  adding: kernel/dtb (deflated 82%)
+  adding: ramdisk/ (stored 0%)
+  adding: ramdisk/init.t124.rc (deflated 74%)
+  adding: ramdisk/init.t124.miui.rc (deflated 77%)
+  adding: tools/ (stored 0%)
+  adding: tools/unpackbootimg (deflated 34%)
+  adding: tools/ak2-core.sh (deflated 72%)
+  adding: tools/busybox (deflated 38%)
+  adding: tools/mkbootimg (deflated 34%)
+  adding: zImage_legacy (deflated 0%)
+[1;32m
+v3.10.96(29.10.2019-20.59).zip создан, перемещение в /home/dargons10/mkernel/output[0m
+[1;32m
+Завершено
 [0m
