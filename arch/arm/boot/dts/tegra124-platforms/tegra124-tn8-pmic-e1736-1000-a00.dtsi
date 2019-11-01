@@ -775,5 +775,4 @@
 			};
 		};
 	};
->>>>>>> bd77f35dfb5... arch: arm: dts: mocha: reorganization pmic and fixed dtsi files
 };
