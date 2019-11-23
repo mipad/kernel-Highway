@@ -17,9 +17,17 @@
 #include <sound/soc.h>
 #include <sound/tlv.h>
 #include <sound/max98090.h>
+#include <linux/gpio.h>
 #include "max98090.h"
 
 #include <linux/version.h>
+
+#ifndef __devexit
+#define __devexit
+#endif
+#ifndef __devexit_p
+#define __devexit_p(x)	(x)
+#endif
 
 #define DEBUG
 #define EXTMIC_METHOD
@@ -2088,6 +2096,13 @@ static const struct snd_soc_dapm_route max98090_audio_map[] = {
 	{"DACL", NULL, "LTENL Mux"},
 	{"DACR", NULL, "LTENR Mux"},
 
+	{"STENL Mux", "Sidetone Left", "ADCL"},
+	{"STENL Mux", "Sidetone Left", "DMICL"},
+	{"STENR Mux", "Sidetone Right", "ADCR"},
+	{"STENR Mux", "Sidetone Right", "DMICR"},
+	{"DACL", NULL, "STENL Mux"},
+	{"DACR", NULL, "STENL Mux"},
+
 	{"AIFINL", NULL, "SHDN"},
 	{"AIFINR", NULL, "SHDN"},
 	{"AIFINL", NULL, "VCM"},
@@ -2487,6 +2502,15 @@ static int max98090_set_bias_level(struct snd_soc_codec *codec,
 
 	switch (level) {
 	case SND_SOC_BIAS_ON:
+		if (codec->dapm.bias_level == SND_SOC_BIAS_OFF) {
+			ret = snd_soc_cache_sync(codec);
+
+			if (ret != 0) {
+				dev_err(codec->dev,
+					"Failed to sync cache: %d\n", ret);
+				return ret;
+			}
+		}
 
 		if (max98090->jack_state == M98090_JACK_STATE_HEADSET) {
 			/*
@@ -2505,7 +2529,7 @@ static int max98090_set_bias_level(struct snd_soc_codec *codec,
 
 	case SND_SOC_BIAS_STANDBY:
 		if (codec->dapm.bias_level == SND_SOC_BIAS_OFF) {
-			ret = regcache_sync(max98090->regmap);
+			ret = snd_soc_cache_sync(codec);
 			if (ret != 0) {
 				dev_err(codec->dev,
 					"Failed to sync cache: %d\n", ret);
@@ -2773,8 +2797,8 @@ static void max98090_jack_work(struct work_struct *work)
 			snd_soc_dapm_force_enable_pin(&codec->dapm, "SPKR");
 			snd_soc_dapm_disable_pin(&codec->dapm, "MIC1");
 			snd_soc_dapm_disable_pin(&codec->dapm, "MIC2");
-			snd_soc_dapm_force_enable_pin(&codec->dapm, "DMIC1");
-			snd_soc_dapm_force_enable_pin(&codec->dapm, "DMIC2");
+			snd_soc_dapm_force_enable_pin(&codec->dapm, "DMICL");
+			snd_soc_dapm_force_enable_pin(&codec->dapm, "DMICR");
 			max98090_dmic_switch(codec, 1);
 
 			break;
@@ -2808,8 +2832,8 @@ static void max98090_jack_work(struct work_struct *work)
 			snd_soc_dapm_force_enable_pin(&codec->dapm, "HPR");
 			snd_soc_dapm_disable_pin(&codec->dapm, "MIC1");
 			snd_soc_dapm_disable_pin(&codec->dapm, "MIC2");
-			snd_soc_dapm_force_enable_pin(&codec->dapm, "DMIC1");
-			snd_soc_dapm_force_enable_pin(&codec->dapm, "DMIC2");
+			snd_soc_dapm_force_enable_pin(&codec->dapm, "DMICL");
+			snd_soc_dapm_force_enable_pin(&codec->dapm, "DMICR");
 			max98090_dmic_switch(codec, 1);
 
 			break;
@@ -2827,8 +2851,8 @@ static void max98090_jack_work(struct work_struct *work)
 			snd_soc_dapm_disable_pin(&codec->dapm, "SPKR");
 			snd_soc_dapm_force_enable_pin(&codec->dapm, "HPL");
 			snd_soc_dapm_force_enable_pin(&codec->dapm, "HPR");
-			snd_soc_dapm_disable_pin(&codec->dapm, "DMIC1");
-			snd_soc_dapm_disable_pin(&codec->dapm, "DMIC2");
+			snd_soc_dapm_disable_pin(&codec->dapm, "DMICL");
+			snd_soc_dapm_disable_pin(&codec->dapm, "DMICR");
 			snd_soc_dapm_force_enable_pin(&codec->dapm, "MIC1");
 			snd_soc_dapm_force_enable_pin(&codec->dapm, "MIC2");
 			max98090_dmic_switch(codec, 0);
@@ -3598,8 +3622,30 @@ static void max98090_handle_pdata(struct snd_soc_codec *codec)
 	struct max98090_pdata *pdata = max98090->pdata;
 
 	if (!pdata) {
-		dev_dbg(codec->dev, "No platform data\n");
-		return;
+		struct device_node *np = codec->dev->of_node;
+		int digmic_left_mode = 0;
+		int digmic_right_mode = 0;
+
+		pdata = max98090->pdata = devm_kzalloc(codec->dev,
+				sizeof(struct max98090_pdata),  GFP_KERNEL);
+		if (!max98090->pdata) {
+			dev_err(codec->dev, "no mmemory for platform data\n");
+			return;
+		}
+
+		pdata->eq_cfg = devm_kzalloc(codec->dev,
+				sizeof(struct max98090_eq_cfg), GFP_KERNEL);
+		if (!pdata->eq_cfg) {
+			dev_err(codec->dev, "no mmemory for platform data\n");
+			return;
+		}
+
+		of_property_read_u32(np, "maxim,digmic-left-mode",
+				&digmic_left_mode);
+		of_property_read_u32(np, "maxim,digmic-right-mode",
+				&digmic_right_mode);
+		pdata->digmic_left_mode = digmic_left_mode;
+		pdata->digmic_right_mode = digmic_right_mode;
 	}
 
 	max98090_dmic_switch(codec, 1);
@@ -3650,10 +3696,20 @@ static int max98090_probe(struct snd_soc_codec *codec)
 	struct max98090_priv *max98090 = snd_soc_codec_get_drvdata(codec);
 	struct max98090_pdata *pdata = max98090->pdata;
 	struct max98090_cdata *cdata;
+	struct device_node *np = NULL;
+	int audio_int = 0;
 	int ret = 0;
 
 	dev_info(codec->dev, "max98090_probe\n");
 
+	if (pdata && pdata->irq)
+		audio_int = pdata->irq;
+	else {
+		np = codec->dev->of_node;
+		of_property_read_u32(np, "maxim,audio-int", &audio_int);
+	}
+
+	max98090->irq = audio_int;
 	max98090->codec = codec;
 
 	codec->dapm.idle_bias_off = 1;
@@ -3708,16 +3764,7 @@ static int max98090_probe(struct snd_soc_codec *codec)
 
 	INIT_DELAYED_WORK(&max98090->jack_work, max98090_jack_work);
 
-	/* Enable jack detection */
-	snd_soc_write(codec, M98090_REG_3D_CFG_JACK,
-		M98090_JDETEN_MASK | M98090_JDEB_25MS);
-
-	/* Register for interrupts */
-	if ((request_threaded_irq(pdata->irq, NULL,
-		max98090_interrupt, IRQF_TRIGGER_FALLING,
-		"max98090_interrupt", codec)) < 0) {
-		dev_info(codec->dev, "request_irq failed\n");
-	}
+	max98090_handle_pdata(codec);
 
 #ifdef MAX98090_HIGH_PERFORMANCE
 	/* High Performance */
@@ -3747,9 +3794,21 @@ static int max98090_probe(struct snd_soc_codec *codec)
 	snd_soc_write(codec, M98090_REG_42_BIAS_CNTL,
 		M98090_VCM_MODE_MASK);
 
-	max98090_handle_pdata(codec);
-
 	max98090_add_widgets(codec);
+
+	/* Clear existing interrupts */
+	snd_soc_read(codec, M98090_REG_01_IRQ_STATUS);
+
+	/* Register for interrupts */
+	if ((request_threaded_irq(audio_int, NULL,
+		max98090_interrupt, IRQF_TRIGGER_FALLING | IRQF_ONESHOT,
+		"max98090_interrupt", codec)) < 0) {
+		dev_info(codec->dev, "request_irq failed\n");
+	}
+
+	/* Enable jack detection */
+	snd_soc_write(codec, M98090_REG_3D_CFG_JACK,
+		M98090_JDETEN_MASK | M98090_JDEB_25MS);
 
 err_access:
 	return ret;
@@ -3758,6 +3817,8 @@ err_access:
 static int max98090_remove(struct snd_soc_codec *codec)
 {
 	struct max98090_priv *max98090 = snd_soc_codec_get_drvdata(codec);
+
+	free_irq(max98090->irq, codec);
 
 	cancel_delayed_work_sync(&max98090->jack_work);
 
@@ -3836,9 +3897,7 @@ static int __init max98090_init(void)
 	if (ret)
 		pr_err("Failed to register MAX98090 I2C driver: %d\n", ret);
 	else
-		pr_info("MAX98090 driver built on %s at %s\n",
-			__DATE__,
-			__TIME__);
+		pr_info("MAX98090 driver registered\n");
 
 	return ret;
 }
