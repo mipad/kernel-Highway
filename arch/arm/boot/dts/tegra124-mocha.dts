@@ -1,19 +1,35 @@
+/*
+ * arch/arm/boot/dts/tegra124-tn8-p1761-1270-a00.dts
+ *
+ * Copyright (c) 2017, Smoke Team.  All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 /dts-v1/;
 
 #include "tegra124.dtsi"
 #include "tegra124-tn8.dtsi"
 #include "tegra124-platforms/tegra124-tn8-emc-e1922-1100-a00.dtsi"
-#include "tegra124-platforms/tegra124-tn8-pmic-e1736-1000-a00.dtsi"
-#include "tegra124-platforms/tegra124-tn8-fixed-e1736-1000-a00.dtsi"
-
-/* this is static dtsi files */
 #include "tegra124-platforms/tegra124-mocha-gpio-e1780.dtsi"
 #include "tegra124-platforms/tegra124-mocha-keys-e1780.dtsi"
 #include "tegra124-platforms/tegra124-mocha-pinmux-e1780.dtsi"
-/* end of static dtsi files */
-
 #include "tegra124-platforms/tegra124-mocha-sysedp.dtsi"
-
+#include "tegra124-platforms/tegra124-mocha-camera.dtsi"
+#include "tegra124-platforms/tegra124-mocha-power-tree.dtsi"
+#include "tegra124-platforms/tegra124-mocha-dfll.dtsi"
+#include "panel-s-wqxga-7-9-x6.dtsi"
 / {
 	model = "NVIDIA Tegra124 TN8";
 	compatible = "nvidia,mocha", "nvidia,tegra124";
@@ -21,17 +37,16 @@
 	nvidia,boardids = "1780:1100:3:A:7","1845:1000:0:A:7";
 	#address-cells = <1>;
 	#size-cells = <1>;
-
-	chosen {
+chosen {
 		bootargs = "tegraid=40.0.0.00.00 vmalloc=256M video=tegrafb console=ttyS0,115200n8 earlyprintk";
 		linux,initrd-start = <0x85000000>;
 		linux,initrd-end = <0x851bc400>;
 	};
 
+
 	i2c@7000c700 {
 		nvidia,clock-always-on;
 		clock-frequency = <400000>;
-
     synaptics_dsi_i2c@20 {
 			compatible = "synaptics,dsx-i2c";
 			reg = <0x20>;
@@ -136,11 +151,7 @@
 			st,wakeup-gpio = <&gpio 144 0x00>;
 		};
 
-		bmp280@77 {
-			compatible = "bmp,bmp280";
-			reg = <0x77>;
-		};
-
+		
 		isl29035@44 {
 			compatible = "intersil,isl29035";
 			reg = <0x44>;
@@ -154,46 +165,60 @@
 			als_sensitive = <25>;
 		};
 
-		akm09911@0c {
-			compatible = "akm,akm09911";
-			reg = <0x0c>;
+		lp5521@32 {
+			compatible = "national,lp5521";
+			reg = <0x32>;
+			lp5521,clock-mode = <0>;
+			lp5521,gpio = <&gpio 55 0>;
+			lp5521,num-channels = <3>;
 
-			akm,layout = <6>;
-			akm,gpio_rst = <132>;
+			lp5521,config_1 {
+				lp5521,name = "red";
+				lp5521,chan-nr = <0>;
+				lp5521,led-current = <20>;
+				lp5521,max-current = <255>;
+			};
+			lp5521,config_2 {
+				lp5521,name = "green";
+				lp5521,chan-nr = <1>;
+				lp5521,led-current = <20>;
+				lp5521,max-current = <255>;
+			};
+			lp5521,config_3 {
+				lp5521,name = "blue";
+				lp5521,chan-nr = <2>;
+				lp5521,led-current = <20>;
+				lp5521,max-current = <255>;
+			};
+		};
+	};
+
+rt5671@1c {
+			compatible = "realtek,rt5671";
+			reg = <0x1c>;
+
+	                realtek,jd_mode = <2>;
+	                realtek,codec_gpio = <&gpio 178 0>;
+	                realtek,in2_diff = <1>;
+	                realtek,in3_diff = <0>;
+	                realtek,in4_diff = <1>;
+	                realtek,bclk_32fs = <0 1 1 1>;
 		};
 
-		mpu6515@68 {
-			compatible = "inven,mpu6515";
-			reg = <0x68>;
-			interrupt-parent = <&gpio>;
-			interrupts = <139 0x01>;
-
-			regulator_config = <0>;
-
-			fs_range = <0x00>;
-			axis_map_x = <0>;
-			axis_map_y = <1>;
-			axis_map_z = <2>;
-			negate_x = <0>;
-			negate_y = <1>;
-			negate_z = <1>;
-			poll_interval = <200>;
-			min_interval = <5>;
-
-			inven,secondary_type = "none";
-			inven,secondary_reg = <0x0C>;
-			inven,secondary_name = "ak8963";
-			inven,secondary_axis_map_x = <1>;
-			inven,secondary_axis_map_y = <0>;
-			inven,secondary_axis_map_z = <2>;
-			inven,secondary_negate_x = <0>;
-			inven,secondary_negate_y = <0>;
-			inven,secondary_negate_z = <1>;
-
-			inven,aux_type = "none";
-			inven,aux_reg = <0x76>;
-			inven,aus_name = "bmp280";
+		tfa9890@34 {
+			compatible = "nxp,tfa9890";
+			reg = <0x34>;
 		};
+
+		tfa9890@37 {
+			compatible = "nxp,tfa9890";
+			reg = <0x37>;
+		};
+
+
+
+tegra_pwm: pwm@7000a000 {
+		clocks = <&tegra_car 17>;
 	};
 
 	pwmleds {
@@ -205,7 +230,6 @@
 			max-duty = <50>;
 		};
 	};
-
     sound {
 		compatible = "nvidia,tegra-audio-rt5671";
 		nvidia,hp-mute-gpios = <&gpio 185 0>;
@@ -275,4 +299,3 @@
 	};
 
 };
-
